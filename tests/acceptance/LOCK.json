@@ -13,6 +13,9 @@
   "tests/acceptance/m5/_exact_m5.py": "8d7334fa94522cbdec6b9813633d49e7e07901f97dd644da3567fdcce55f24d9",
   "tests/acceptance/m5/test_m5_mps.py": "0f14dc72842f34966d3416a325124651e3ba5ef8399027b16cbb3e538d6ca2a7",
   "tests/acceptance/m5/test_m5_outputs.py": "8cf3e46de381b80c4e31a474b3e5c8ce319228cb738a091de93b06d887595e03",
+  "tests/acceptance/m6/test_m6_convergence.py": "0ad579c5b6ad14c48f77134033eb60aa032a75e9f05f140a0af49d9bdb91dfdf",
+  "tests/acceptance/m6/test_m6_mps_run.py": "fa0950e5c1251082a37d321ab7305173f20ec685083905f0db952eeacdf1fe3f",
+  "tests/acceptance/m6/test_m6_package.py": "48af285fb8fd7d3e4232b77d8774a1619a6ac59f25af4f81fbd180e30124cb3e",
   "tools/check_lock.py": "10a9fb1b4049c34902753bdc91f329108e2eceb539704fe896d2c72ddb60ff1f",
   "tools/lock.py": "5e5738853f2f959da9515a94f22a913cac0a57cc7d1a32418d8cb7abab8c3773"
  },
@@ -21,6 +24,7 @@
   "m2",
   "m3",
   "m4",
-  "m5"
+  "m5",
+  "m6"
  ]
 }
