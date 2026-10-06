@@ -23,8 +23,7 @@ G, L1, L2 = 1.25, 3, 2
 DT = 0.45 * G ** 2
 P1, READOUT = 3e-5, 1e-3
 CONFIGS = [(2, 7.9e-4), (4, 1.0e-3), (6, 1.5e-3), (10, 1.0e-3)]
-EXTRA = [(s, p) for s in (2, 4, 6, 8, 10) for p in (7.9e-4, 1.0e-3, 1.5e-3)
-         if (s, p) not in CONFIGS]          # full grid for the report figure
+EXTRA = []        # a full (steps x p2) grid costs ~4.5 h of density-matrix time on 4 vCPUs
 SEED = 20261006
 
 
