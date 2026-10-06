@@ -5,6 +5,51 @@ import numpy as np
 
 from . import hamiltonian as hm
 
+try:
+    import numba
+except ImportError:  # pragma: no cover
+    numba = None
+
+_FAST_N = 16          # use the parallel kernels above this many qubits
+
+if numba is not None:
+    @numba.njit(parallel=True, cache=True)
+    def _z_zz_numba(psi, n, P, Q, nchunk):
+        """Per-chunk sums of |psi|^2 (1-2n_p) and |psi|^2 (1-2 parity(p,q))."""
+        dim = psi.shape[0]
+        zs = np.zeros((nchunk, n))
+        zzs = np.zeros((nchunk, P.shape[0]))
+        size = (dim + nchunk - 1) // nchunk
+        for c in numba.prange(nchunk):
+            for b in range(c * size, min(dim, (c + 1) * size)):
+                w = psi[b].real ** 2 + psi[b].imag ** 2
+                for p in range(n):
+                    zs[c, p] += w * (1 - 2 * ((b >> p) & 1))
+                for k in range(P.shape[0]):
+                    zzs[c, k] += w * (1 - 2 * (((b >> P[k]) ^ (b >> Q[k])) & 1))
+        return zs.sum(axis=0), zzs.sum(axis=0)
+
+    @numba.njit(parallel=True, cache=True)
+    def _flip_overlap(psi, mask, nchunk):
+        dim = psi.shape[0]
+        acc = np.zeros(nchunk)
+        size = (dim + nchunk - 1) // nchunk
+        for c in numba.prange(nchunk):
+            for b in range(c * size, min(dim, (c + 1) * size)):
+                v = np.conj(psi[b]) * psi[b ^ mask]
+                acc[c] += v.real
+        return acc.sum()
+
+
+def _fast(lat, psi):
+    return numba is not None and lat.n > _FAST_N
+
+
+def _z_zz(lat, psi, pairs):
+    P = np.array([p for p, _ in pairs] or [0], dtype=np.int64)[:len(pairs) or 0]
+    Q = np.array([q for _, q in pairs] or [0], dtype=np.int64)[:len(pairs) or 0]
+    return _z_zz_numba(np.ascontiguousarray(psi, dtype=np.complex128), lat.n, P, Q, 256)
+
 
 def _probs(psi):
     return np.abs(psi) ** 2
@@ -19,6 +64,8 @@ def _bit_sign(n, p, b=None):
 
 def z_expectations(lat, psi):
     """Array of <Z_p>, length lat.n."""
+    if _fast(lat, psi):
+        return _z_zz(lat, psi, [])[0]
     n = lat.n
     pr = _probs(psi)
     out = np.empty(n)
@@ -30,6 +77,8 @@ def z_expectations(lat, psi):
 
 def zz_expectations(lat, psi, pairs):
     """Array of <Z_p Z_q> for the listed pairs."""
+    if _fast(lat, psi):
+        return _z_zz(lat, psi, list(pairs))[1]
     pr = _probs(psi)
     b = np.arange(pr.size, dtype=np.uint32)
     out = np.empty(len(pairs))
@@ -65,6 +114,8 @@ def magnetic_energy(lat, g: float, psi, abelian: bool = False) -> float:
 def hexagon_x_string(lat, psi, hexagon) -> float:
     """<prod_{p in hexagon} X_p>."""
     mask = sum(1 << p for p in hexagon)
+    if _fast(lat, psi):
+        return float(_flip_overlap(np.ascontiguousarray(psi, dtype=np.complex128), mask, 256))
     idx = np.arange(psi.size, dtype=np.uint32 if lat.n < 32 else np.uint64)
     return float(np.vdot(psi, psi[idx ^ mask]).real)
 

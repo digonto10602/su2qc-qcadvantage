@@ -151,6 +151,62 @@ if numba is not None:
         return out
 
 
+if numba is not None:
+    @numba.njit(parallel=True, cache=True)
+    def _cheb_numba(psi, prev, diag, nb, inv_g2, abelian, c, r, scale):
+        """prev <- scale * (H psi - c psi) / r - prev   (in place; psi untouched)."""
+        n = nb.shape[0]
+        k = nb.shape[1]
+        tab = np.empty(k + 1)
+        for m in range(k + 1):
+            tab[m] = -inv_g2 * 0.5 ** m
+        for b in numba.prange(psi.shape[0]):
+            acc = (diag[b] - c) * psi[b]
+            for p in range(n):
+                if abelian:
+                    amp = -inv_g2
+                else:
+                    m = 0
+                    for t in range(k):
+                        q = nb[p, t]
+                        if q >= 0:
+                            m += (b >> q) & 1
+                    amp = tab[m]
+                acc += amp * psi[b ^ (1 << p)]
+            prev[b] = scale * acc / r - prev[b]
+
+    @numba.njit(parallel=True, cache=True)
+    def _axpy(a, x, y):
+        for i in numba.prange(x.shape[0]):
+            y[i] += a * x[i]
+
+
+def cheb_recur(lat, g, abelian=False):
+    """Fused Chebyshev recurrence for exact.chebyshev_step / thermal.chebyshev_imag:
+    f(t1, t0, c, r, scale) overwrites t0 with scale*(H t1 - c t1)/r - t0.
+    (scale=2: Chebyshev recurrence; scale=1 with t0=0: first term.)"""
+    if numba is None:
+        def f(t1, t0, c, r, scale):
+            t0 *= -1
+            t0 += scale * (_apply_numpy(lat, g, t1, abelian) - c * t1) / r
+        f.fused = True
+        return f
+    diag, nb = _diag_cached(lat, g), _nb_array(lat)
+
+    def f(t1, t0, c, r, scale):
+        _cheb_numba(t1, t0, diag, nb, 1.0 / g ** 2, bool(abelian), c, r, scale)
+    f.fused = True
+    return f
+
+
+def axpy(a, x, y):
+    """y += a x in place (parallel when numba is available)."""
+    if numba is None:
+        y += a * x
+    else:
+        _axpy(a, x, y)
+
+
 def _apply_numpy(lat, g, psi, abelian):
     n = lat.n
     diag = _diag_cached(lat, g)

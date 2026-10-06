@@ -28,26 +28,44 @@ def spectral_bounds(H, pad: float = 0.05):
     return float(lo - pad * w - 1e-3), float(hi + pad * w + 1e-3)
 
 
+def cheb_series(op, v, coef, c, r, tol=1e-15):
+    """sum_k coef[k] T_k((H - c)/r) v, stopping once two consecutive |coef| < tol*|coef[0]|
+    beyond the peak. `op` is either a matvec callable or a fused recurrence
+    f(t1, t0, c, r, scale) (see hamiltonian.cheb_recur), selected by attribute `fused`."""
+    from .hamiltonian import axpy
+    if getattr(op, "fused", False):
+        recur = op
+    else:
+        def recur(t1, t0, c_, r_, scale):
+            t0 *= -1
+            t0 += scale * (op(t1) - c_ * t1) / r_
+    t0 = np.array(v, dtype=np.complex128)
+    out = coef[0] * t0
+    t1 = np.zeros_like(t0)
+    recur(t0, t1, c, r, 1.0)                      # t1 = Ht t0
+    axpy(coef[1], t1, out)
+    peak = int(np.argmax(np.abs(coef)))
+    thr = tol * np.abs(coef).max()
+    for k in range(2, len(coef)):
+        recur(t1, t0, c, r, 2.0)                  # t0 <- 2 Ht t1 - t0  (= T_k)
+        t0, t1 = t1, t0
+        axpy(coef[k], t1, out)
+        if k > peak and abs(coef[k]) < thr and abs(coef[k - 1]) < thr:
+            break
+    return out
+
+
 def chebyshev_step(matvec, psi, t, bounds, tol=1e-15):
-    """exp(-i H t) psi by Chebyshev expansion; the spectrum of H must lie inside `bounds`."""
+    """exp(-i H t) psi by Chebyshev expansion; the spectrum of H must lie inside `bounds`.
+    `matvec` may be a fused recurrence (hamiltonian.cheb_recur, attribute fused=True)."""
     lo, hi = bounds
     c, r = 0.5 * (hi + lo), 0.5 * (hi - lo)
     x = r * abs(t)
     kmax = int(x + 10 * x ** (1 / 3) + 40)
-    J = jv(np.arange(kmax + 1), x)
     s = -1j if t >= 0 else 1j
-    Ht = lambda v: (matvec(v) - c * v) / r
-    t0 = np.array(psi, dtype=np.complex128)
-    out = J[0] * t0
-    t1 = Ht(t0)
-    out += 2 * s * J[1] * t1
-    for k in range(2, kmax + 1):
-        t2 = 2 * Ht(t1) - t0
-        out += 2 * s ** k * J[k] * t2
-        t0, t1 = t1, t2
-        if k > x and abs(J[k]) < tol and abs(J[k - 1]) < tol:
-            break
-    return np.exp(-1j * c * t) * out
+    k = np.arange(kmax + 1)
+    coef = jv(k, x) * s ** k * np.where(k == 0, 1.0, 2.0)
+    return np.exp(-1j * c * t) * cheb_series(matvec, psi, coef, c, r, tol)
 
 
 def evolve_iter(H, psi0, times, bounds=None):
@@ -57,7 +75,8 @@ def evolve_iter(H, psi0, times, bounds=None):
     if isinstance(H, LinearOperator):
         if bounds is None:
             bounds = spectral_bounds(H)
-        step = lambda v, dt: chebyshev_step(H.matvec, v, dt, bounds)
+        mv = getattr(H, "fused", None) or H.matvec
+        step = lambda v, dt: chebyshev_step(mv, v, dt, bounds)
     else:
         A = -1j * (sp.csr_matrix(H) if sp.issparse(H) else np.asarray(H))
         step = lambda v, dt: expm_multiply(A * dt, v)

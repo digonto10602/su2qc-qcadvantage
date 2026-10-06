@@ -60,6 +60,7 @@ def run_dynamics(lat, g, abelian, excited, times, H=None, bounds=None):
         dim = 2 ** lat.n
         mv = lambda v: hm.apply_h(lat, g, v, abelian)
         H = LinearOperator((dim, dim), matvec=mv, rmatvec=mv, dtype=complex)
+        H.fused = hm.cheb_recur(lat, g, abelian)        # parallel fused Chebyshev step
     out = {k: [] for k in ("electric_energy", "magnetic_energy", "link_energies", "z",
                            "zz_connected_bond0", "hexagon_x_string")}
     for k, psi in enumerate(exact.evolve_iter(H, psi0, times, bounds)):
@@ -125,7 +126,8 @@ def part_n24(state, model, beta0):
     diag = hm.electric_diagonal(lat, g)
     beta, th, hist = thermal.beta_for_energy_typicality(
         mv, dim, E0, {"electric_energy": lambda v: diag * v}, beta0=beta0, step=0.05,
-        n_samples=4, seed=1234, max_evals=8, bounds=bounds)
+        n_samples=4, seed=1234, max_evals=8, bounds=bounds,
+        recur=hm.cheb_recur(lat, g, ab))
     rec["thermal"] = {"beta": beta, "electric_energy": th["electric_energy"],
                       "magnetic_energy": th["energy"] - th["electric_energy"],
                       "method": "typicality, 4 vectors, seed 1234, Chebyshev exp(-beta H/2)",

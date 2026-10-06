@@ -8,12 +8,15 @@
   "tests/acceptance/m2/test_m2_trotter.py": "58af2657fc5ff403e10dacae376f3ecab7806da79f2834a34ddc35280a2b064e",
   "tests/acceptance/m3/test_m3_observables.py": "e5083827b31286102926989ae16a03036c76178e1b09c64e0cde7d17cc02e0fa",
   "tests/acceptance/m3/test_m3_outputs.py": "b03aa7eeb3fd72d6dca70844e09e03afdb84423dd41982fdad25845a36e0277c",
+  "tests/acceptance/m4/test_m4_noise_api.py": "62a870a91fd7fdc68e5bab8e557b1a9e5a4f665a3d46a893dff38de9fcabb0ed",
+  "tests/acceptance/m4/test_m4_outputs.py": "c8b3da158f222b9a64552151e6a8b0d2a2e777475e48ee1994b070d2eb588da9",
   "tools/check_lock.py": "10a9fb1b4049c34902753bdc91f329108e2eceb539704fe896d2c72ddb60ff1f",
   "tools/lock.py": "5e5738853f2f959da9515a94f22a913cac0a57cc7d1a32418d8cb7abab8c3773"
  },
  "milestones": [
   "m1",
   "m2",
-  "m3"
+  "m3",
+  "m4"
  ]
 }

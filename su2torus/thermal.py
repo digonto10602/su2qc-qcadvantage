@@ -70,28 +70,20 @@ def _random_vectors(dim, n_samples, seed):
 
 def chebyshev_imag(apply_h, v, tau, bounds, tol=1e-15):
     """exp(-tau H) v up to a v-independent positive factor exp(-tau c + |tau r|)
-    (c, r = centre, half-width of `bounds`). The factor cancels in typicality ratios."""
+    (c, r = centre, half-width of `bounds`). The factor cancels in typicality ratios.
+    `apply_h` may be a fused recurrence (hamiltonian.cheb_recur, attribute fused=True)."""
+    from .exact import cheb_series
     lo, hi = bounds
     c, r = 0.5 * (hi + lo), 0.5 * (hi - lo)
     a = tau * r
     kmax = int(abs(a) + 10 * abs(a) ** (1 / 3) + 40)
-    coef = ive(np.arange(kmax + 1), a) * (-1.0) ** np.arange(kmax + 1)
-    Ht = lambda x: (apply_h(x) - c * x) / r
-    t0 = np.array(v, dtype=np.complex128)
-    out = coef[0] * t0
-    t1 = Ht(t0)
-    out += 2 * coef[1] * t1
-    for k in range(2, kmax + 1):
-        t2 = 2 * Ht(t1) - t0
-        out += 2 * coef[k] * t2
-        t0, t1 = t1, t2
-        if k > abs(a) and abs(coef[k]) < tol * abs(coef[0]) and abs(coef[k - 1]) < tol * abs(coef[0]):
-            break
-    return out
+    k = np.arange(kmax + 1)
+    coef = ive(k, a) * (-1.0) ** k * np.where(k == 0, 1.0, 2.0)
+    return cheb_series(apply_h, v, coef, c, r, tol)
 
 
 def thermal_typicality(apply_h, dim: int, beta: float, ops: dict, n_samples: int = 10,
-                       seed: int = 0, bounds=None) -> dict:
+                       seed: int = 0, bounds=None, recur=None) -> dict:
     """Quantum typicality: random vectors r, |r_b> = exp(-beta H/2)|r>,
     <O> ~ sum_r <r_b|O|r_b> / sum_r <r_b|r_b>.  Matrix-free: apply_h(psi) -> H psi;
     ops maps name -> callable psi -> O psi. Returns {'energy': ..., name: ...}.
@@ -105,7 +97,7 @@ def thermal_typicality(apply_h, dim: int, beta: float, ops: dict, n_samples: int
         if beta == 0:
             rb = r
         elif bounds is not None:
-            rb = chebyshev_imag(apply_h, r, 0.5 * beta, bounds)
+            rb = chebyshev_imag(recur or apply_h, r, 0.5 * beta, bounds)
         else:
             rb = expm_multiply(A, r, traceA=0.0)
         den += np.vdot(rb, rb).real
@@ -116,7 +108,8 @@ def thermal_typicality(apply_h, dim: int, beta: float, ops: dict, n_samples: int
 
 
 def beta_for_energy_typicality(apply_h, dim, energy, ops, beta0=0.0, step=0.1,
-                               n_samples=4, seed=0, max_evals=8, rtol=0.02, bounds=None):
+                               n_samples=4, seed=0, max_evals=8, rtol=0.02, bounds=None,
+                               recur=None):
     """Bracketed false-position (Illinois) search for beta with <H>_beta = energy, using
     thermal_typicality with fixed random vectors (same seed for every evaluation).
     Stops when |E - energy| <= rtol*max(1,|energy|)/4, or after max_evals evaluations.
@@ -124,7 +117,7 @@ def beta_for_energy_typicality(apply_h, dim, energy, ops, beta0=0.0, step=0.1,
     hist = []
 
     def ev(b):
-        r = thermal_typicality(apply_h, dim, b, ops, n_samples, seed, bounds)
+        r = thermal_typicality(apply_h, dim, b, ops, n_samples, seed, bounds, recur)
         hist.append((b, r))
         return r["energy"] - energy
 
