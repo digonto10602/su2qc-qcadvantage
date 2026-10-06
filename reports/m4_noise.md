@@ -28,7 +28,7 @@ Emulate the first-order Trotter circuits of the 12-plaquette torus under realist
 
 ## What it means
 - **The echo measures the fidelity.** $F_\text{echo}$ is within 3–13% of $F_\text{pred}$; the criterion allows 25%. The echo is always slightly higher than the prediction, because some errors (e.g. $Z$ errors on qubits in a $Z$ eigenstate) do not change the returned bit string.
-- **ZNE meets the criterion in 4 of 4 configurations.** It reduces the error by a factor of 7–28, which is far more than the required factor of 2. ZNE is the method recorded in the results file (`mitigation_method: "zne"`).
+- **ZNE meets the criterion in 4 of 4 configurations.** It reduces the error by a factor of 5.8–15.5, well beyond the required factor of 2. ZNE is the method recorded in the results file (`mitigation_method: "zne"`).
 - **Global echo rescaling fails.** It makes the error 2.7–3.8 times *larger*. The noisy $\langle H_E\rangle$ moves toward its decohered value much more slowly than $F$ decays. A single depolarizing error damages only a few local link energies; it does not scramble the whole state. Dividing by the global $F$ therefore overcorrects. Global-fidelity rescaling is not suitable for local observables such as link energies; observable-specific decay factors or ZNE should be used instead.
 - **Cost of one exact emulation.** At 10 steps (1140 two-qubit gates, $F\approx0.33$), raw noise biases $\langle H_E\rangle$ by about $0.26$, roughly 25% of the distance between the ideal value and the decohered value. Folding by 5 still leaves a signal that can be extrapolated.
 
