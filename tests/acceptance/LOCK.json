@@ -1,0 +1,19 @@
+{
+ "files": {
+  "tests/acceptance/_ref.py": "811d172dc6edd5be12e0dfeab36551f4a48365a555433c3eaba2d841f7b07c62",
+  "tests/acceptance/conftest.py": "1ce87b7ce16739f5fe808a7d14df13121a96fed24155b1ab9978b46a6addd109",
+  "tests/acceptance/m1/test_m1_hamiltonian.py": "3c3fcc994a7526889ab454820789784008c2e12cd6b1815f93efabcf3ad3cfa2",
+  "tests/acceptance/m1/test_m1_lattice.py": "acecb35120ca58b0b0d1f8aa781c159441500614179e2d247ce44dcafa10adf1",
+  "tests/acceptance/m2/test_m2_exact.py": "66e31bbf50b63298be7e289f57e5ea0cabf16ec1b5cca90f6ad5e943300462bd",
+  "tests/acceptance/m2/test_m2_trotter.py": "58af2657fc5ff403e10dacae376f3ecab7806da79f2834a34ddc35280a2b064e",
+  "tests/acceptance/m3/test_m3_observables.py": "e5083827b31286102926989ae16a03036c76178e1b09c64e0cde7d17cc02e0fa",
+  "tests/acceptance/m3/test_m3_outputs.py": "b03aa7eeb3fd72d6dca70844e09e03afdb84423dd41982fdad25845a36e0277c",
+  "tools/check_lock.py": "10a9fb1b4049c34902753bdc91f329108e2eceb539704fe896d2c72ddb60ff1f",
+  "tools/lock.py": "5e5738853f2f959da9515a94f22a913cac0a57cc7d1a32418d8cb7abab8c3773"
+ },
+ "milestones": [
+  "m1",
+  "m2",
+  "m3"
+ ]
+}
