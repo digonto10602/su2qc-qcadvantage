@@ -1,0 +1,274 @@
+[
+ {
+  "L1": 3,
+  "L2": 2,
+  "periodic": true,
+  "n": 12,
+  "model": "su2",
+  "order": 1,
+  "per_step": {
+   "native_zz": 114,
+   "cz": 132
+  },
+  "per_plaquette_per_step": {
+   "native_zz": 9.5,
+   "cz": 11.0
+  }
+ },
+ {
+  "L1": 3,
+  "L2": 2,
+  "periodic": true,
+  "n": 12,
+  "model": "su2",
+  "order": 2,
+  "per_step": {
+   "native_zz": 180,
+   "cz": 216
+  },
+  "per_plaquette_per_step": {
+   "native_zz": 15.0,
+   "cz": 18.0
+  },
+  "fused_per_plaquette_per_step": {
+   "native_zz": 13.5,
+   "cz": 15.0
+  }
+ },
+ {
+  "L1": 3,
+  "L2": 2,
+  "periodic": true,
+  "n": 12,
+  "model": "abelian",
+  "order": 1,
+  "per_step": {
+   "native_zz": 18,
+   "cz": 36
+  },
+  "per_plaquette_per_step": {
+   "native_zz": 1.5,
+   "cz": 3.0
+  }
+ },
+ {
+  "L1": 3,
+  "L2": 2,
+  "periodic": true,
+  "n": 12,
+  "model": "abelian",
+  "order": 2,
+  "per_step": {
+   "native_zz": 36,
+   "cz": 72
+  },
+  "per_plaquette_per_step": {
+   "native_zz": 3.0,
+   "cz": 6.0
+  }
+ },
+ {
+  "L1": 4,
+  "L2": 3,
+  "periodic": true,
+  "n": 24,
+  "model": "su2",
+  "order": 1,
+  "per_step": {
+   "native_zz": 228,
+   "cz": 264
+  },
+  "per_plaquette_per_step": {
+   "native_zz": 9.5,
+   "cz": 11.0
+  }
+ },
+ {
+  "L1": 4,
+  "L2": 3,
+  "periodic": true,
+  "n": 24,
+  "model": "su2",
+  "order": 2,
+  "per_step": {
+   "native_zz": 360,
+   "cz": 432
+  },
+  "per_plaquette_per_step": {
+   "native_zz": 15.0,
+   "cz": 18.0
+  },
+  "fused_per_plaquette_per_step": {
+   "native_zz": 13.5,
+   "cz": 15.0
+  }
+ },
+ {
+  "L1": 4,
+  "L2": 3,
+  "periodic": true,
+  "n": 24,
+  "model": "abelian",
+  "order": 1,
+  "per_step": {
+   "native_zz": 36,
+   "cz": 72
+  },
+  "per_plaquette_per_step": {
+   "native_zz": 1.5,
+   "cz": 3.0
+  }
+ },
+ {
+  "L1": 4,
+  "L2": 3,
+  "periodic": true,
+  "n": 24,
+  "model": "abelian",
+  "order": 2,
+  "per_step": {
+   "native_zz": 72,
+   "cz": 144
+  },
+  "per_plaquette_per_step": {
+   "native_zz": 3.0,
+   "cz": 6.0
+  }
+ },
+ {
+  "L1": 4,
+  "L2": 6,
+  "periodic": true,
+  "n": 48,
+  "model": "su2",
+  "order": 1,
+  "per_step": {
+   "native_zz": 456,
+   "cz": 528
+  },
+  "per_plaquette_per_step": {
+   "native_zz": 9.5,
+   "cz": 11.0
+  }
+ },
+ {
+  "L1": 4,
+  "L2": 6,
+  "periodic": true,
+  "n": 48,
+  "model": "su2",
+  "order": 2,
+  "per_step": {
+   "native_zz": 720,
+   "cz": 864
+  },
+  "per_plaquette_per_step": {
+   "native_zz": 15.0,
+   "cz": 18.0
+  },
+  "fused_per_plaquette_per_step": {
+   "native_zz": 13.5,
+   "cz": 15.0
+  }
+ },
+ {
+  "L1": 4,
+  "L2": 6,
+  "periodic": true,
+  "n": 48,
+  "model": "abelian",
+  "order": 1,
+  "per_step": {
+   "native_zz": 72,
+   "cz": 144
+  },
+  "per_plaquette_per_step": {
+   "native_zz": 1.5,
+   "cz": 3.0
+  }
+ },
+ {
+  "L1": 4,
+  "L2": 6,
+  "periodic": true,
+  "n": 48,
+  "model": "abelian",
+  "order": 2,
+  "per_step": {
+   "native_zz": 144,
+   "cz": 288
+  },
+  "per_plaquette_per_step": {
+   "native_zz": 3.0,
+   "cz": 6.0
+  }
+ },
+ {
+  "L1": 3,
+  "L2": 4,
+  "periodic": false,
+  "n": 24,
+  "model": "su2",
+  "order": 1,
+  "per_step": {
+   "native_zz": 169,
+   "cz": 198
+  },
+  "per_plaquette_per_step": {
+   "native_zz": 7.041666666666667,
+   "cz": 8.25
+  }
+ },
+ {
+  "L1": 3,
+  "L2": 4,
+  "periodic": false,
+  "n": 24,
+  "model": "su2",
+  "order": 2,
+  "per_step": {
+   "native_zz": 268,
+   "cz": 326
+  },
+  "per_plaquette_per_step": {
+   "native_zz": 11.166666666666666,
+   "cz": 13.583333333333334
+  },
+  "fused_per_plaquette_per_step": {
+   "native_zz": 9.958333333333334,
+   "cz": 11.166666666666666
+  }
+ },
+ {
+  "L1": 3,
+  "L2": 4,
+  "periodic": false,
+  "n": 24,
+  "model": "abelian",
+  "order": 1,
+  "per_step": {
+   "native_zz": 29,
+   "cz": 58
+  },
+  "per_plaquette_per_step": {
+   "native_zz": 1.2083333333333333,
+   "cz": 2.4166666666666665
+  }
+ },
+ {
+  "L1": 3,
+  "L2": 4,
+  "periodic": false,
+  "n": 24,
+  "model": "abelian",
+  "order": 2,
+  "per_step": {
+   "native_zz": 58,
+   "cz": 116
+  },
+  "per_plaquette_per_step": {
+   "native_zz": 2.4166666666666665,
+   "cz": 4.833333333333333
+  }
+ }
+]
