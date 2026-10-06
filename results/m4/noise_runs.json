@@ -1,0 +1,103 @@
+{
+ "N": 12,
+ "L1": 3,
+ "L2": 2,
+ "g": 1.25,
+ "dt": 0.703125,
+ "order": 1,
+ "state": "stripe",
+ "p1": 3e-05,
+ "readout": 0.001,
+ "fidelity_formula": "F_pred = prod_gates (1 - eps), eps = p (1 - 1/d^2): 15 p2/16 per cx/rzz, 3 p1/4 per 1-qubit gate (readout excluded)",
+ "mitigation_method": "zne",
+ "configs": [
+  {
+   "steps": 2,
+   "p2": 0.00079,
+   "shots": null,
+   "seed": 20261006,
+   "n_2q": 228,
+   "n_1q": 240,
+   "ideal_electric_energy": 6.137810071742491,
+   "raw_electric_energy": 6.101880160669283,
+   "F_predicted": 0.840023741765419,
+   "F_echo": 0.8631723034109591,
+   "F_rescale": 0.8631723034109591,
+   "rescaled_electric_energy": 6.233202609927141,
+   "zne_values": [
+    6.101880160669283,
+    6.040413061891009,
+    5.983352438650053
+   ],
+   "zne_electric_energy": 6.134266138384914
+  },
+  {
+   "steps": 4,
+   "p2": 0.001,
+   "shots": null,
+   "seed": 20261006,
+   "n_2q": 456,
+   "n_1q": 480,
+   "ideal_electric_energy": 6.56607055354683,
+   "raw_electric_energy": 6.424633764442696,
+   "F_predicted": 0.6450027894551013,
+   "F_echo": 0.6860686796669473,
+   "F_rescale": 0.6860686796669473,
+   "rescaled_electric_energy": 6.951398174435022,
+   "zne_values": [
+    6.424633764442696,
+    6.195587387721352,
+    6.013938202890051
+   ],
+   "zne_electric_energy": 6.5569308997621345
+  },
+  {
+   "steps": 6,
+   "p2": 0.0015,
+   "shots": null,
+   "seed": 20261006,
+   "n_2q": 684,
+   "n_1q": 720,
+   "ideal_electric_energy": 6.328588032816851,
+   "raw_electric_energy": 6.083622644499032,
+   "F_predicted": 0.37577972864434367,
+   "F_echo": 0.42607392548030265,
+   "F_rescale": 0.42607392548030265,
+   "rescaled_electric_energy": 7.174950585049103,
+   "zne_values": [
+    6.083622644499032,
+    5.764338225084122,
+    5.576233120689476
+   ],
+   "zne_electric_energy": 6.292457097339085
+  },
+  {
+   "steps": 10,
+   "p2": 0.001,
+   "shots": null,
+   "seed": 20261006,
+   "n_2q": 1140,
+   "n_1q": 1200,
+   "ideal_electric_energy": 6.269507576026246,
+   "raw_electric_energy": 6.008715645405878,
+   "F_predicted": 0.33412116121824204,
+   "F_echo": 0.3698818723383493,
+   "F_rescale": 0.3698818723383493,
+   "rescaled_electric_energy": 7.261310386977501,
+   "zne_values": [
+    6.008715645405878,
+    5.686089282172922,
+    5.50880764250686
+   ],
+   "zne_electric_energy": 6.224533098359941
+  }
+ ],
+ "extra_configs": [],
+ "repro": {
+  "steps": 2,
+  "p2": 0.001,
+  "shots": 4000,
+  "seed": 20261006,
+  "raw_electric_energy": 6.0943359375
+ }
+}
