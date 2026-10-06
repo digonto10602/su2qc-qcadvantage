@@ -28,6 +28,8 @@ class HoneycombTorus:
 
     def __init__(self, L1: int, L2: int, periodic: bool = True):
         self.L1, self.L2, self.periodic = int(L1), int(L2), bool(periodic)
+        if self.periodic and min(self.L1, self.L2) < 2:
+            raise ValueError("torus needs L1, L2 >= 2 (L = 1 merges distinct links)")
         self.n = 2 * self.L1 * self.L2
         nb = [set() for _ in range(self.n)]
         for i in range(self.L1):

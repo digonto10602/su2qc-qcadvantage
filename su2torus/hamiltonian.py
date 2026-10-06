@@ -47,6 +47,8 @@ def _flip_amplitudes(lat, g: float, p: int, b: np.ndarray, abelian: bool) -> np.
 
 def split_sparse(lat, g: float, abelian: bool = False):
     """(H_E, H_B^A, H_B^B) as csr matrices; their sum equals build_sparse."""
+    if lat.n > 20:
+        raise MemoryError("n > 20: sparse H would need > 10 GB; use apply_h (matrix-free)")
     dim = 2 ** lat.n
     b = np.arange(dim, dtype=np.int64)
     HE = sp.diags(electric_diagonal(lat, g)).tocsr()

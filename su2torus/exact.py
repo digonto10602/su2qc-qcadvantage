@@ -50,14 +50,10 @@ def chebyshev_step(matvec, psi, t, bounds, tol=1e-15):
     return np.exp(-1j * c * t) * out
 
 
-def evolve(H, psi0, times, bounds=None):
-    """States exp(-i H t) psi0 for each t in `times` (ascending, may start at 0).
-    H may be a sparse matrix or a scipy LinearOperator. Returns array (len(times), dim).
-    Sparse/dense H: scipy expm_multiply. LinearOperator: Chebyshev propagation
-    (spectral bounds from Lanczos unless given)."""
+def evolve_iter(H, psi0, times, bounds=None):
+    """Generator of exp(-i H t) psi0 for t in `times` (one state alive at a time)."""
     times = np.asarray(times, dtype=float)
     psi = np.asarray(psi0, dtype=np.complex128)
-    out = np.empty((len(times), psi.size), dtype=np.complex128)
     if isinstance(H, LinearOperator):
         if bounds is None:
             bounds = spectral_bounds(H)
@@ -66,9 +62,16 @@ def evolve(H, psi0, times, bounds=None):
         A = -1j * (sp.csr_matrix(H) if sp.issparse(H) else np.asarray(H))
         step = lambda v, dt: expm_multiply(A * dt, v)
     tprev = 0.0
-    for k, t in enumerate(times):
+    for t in times:
         if t != tprev:
             psi = step(psi, t - tprev)
-        out[k] = psi
+        yield psi
         tprev = t
-    return out
+
+
+def evolve(H, psi0, times, bounds=None):
+    """States exp(-i H t) psi0 for each t in `times` (ascending, may start at 0).
+    H may be a sparse matrix or a scipy LinearOperator. Returns array (len(times), dim).
+    Sparse/dense H: scipy expm_multiply. LinearOperator: Chebyshev propagation
+    (spectral bounds from Lanczos unless given)."""
+    return np.array(list(evolve_iter(H, psi0, times, bounds)), dtype=np.complex128)
