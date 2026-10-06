@@ -32,9 +32,15 @@ Compare the late-time values with the **thermal anchor** and the **decohered val
 | 12 | 1.4 | SU(2) | vacuum | 0 | 1.773 | 1.710 | 6.615 | 1.624 |
 | 12 | 1.4 | SU(2) | neel_half | 4.410 | 5.106 | 4.939 | 6.615 | 0.662 |
 | 12 | 1.4 | SU(2) | stripe | 8.820 | 8.405 | 8.307 | 6.615 | −0.670 |
+| 12 | 1.1 | abelian | vacuum | 0 | 2.071 | 3.682 | 4.084 | 0.477 |
+| 12 | 1.1 | abelian | neel_half | 2.723 | 3.418 | 3.946 | 4.084 | 0.150 |
+| 12 | 1.1 | abelian | stripe | 5.445 | 4.749 | 4.222 | 4.084 | −0.150 |
 | 12 | 1.25 | abelian | vacuum | 0 | 3.147 | 4.009 | 5.273 | 0.981 |
 | 12 | 1.25 | abelian | neel_half | 3.516 | 4.524 | 4.854 | 5.273 | 0.277 |
 | 12 | 1.25 | abelian | stripe | 7.031 | 6.023 | 5.693 | 5.273 | −0.277 |
+| 12 | 1.4 | abelian | vacuum | 0 | 3.076 | 3.067 | 6.615 | 1.567 |
+| 12 | 1.4 | abelian | neel_half | 4.410 | 5.588 | 5.640 | 6.615 | 0.408 |
+| 12 | 1.4 | abelian | stripe | 8.820 | 7.642 | 7.590 | 6.615 | −0.408 |
 | 24 | 1.25 | SU(2) | vacuum | 0 | 4.466 | 5.154 | 10.547 | 1.440 |
 | 24 | 1.25 | SU(2) | neel_half | 10.547 | 10.818 | 10.547 | 10.547 | 0.000 |
 | 24 | 1.25 | SU(2) | stripe | 10.547 | 10.662 | 10.548 | 10.547 | 0.000 |
@@ -42,18 +48,26 @@ Compare the late-time values with the **thermal anchor** and the **decohered val
 | 24 | 1.25 | abelian | neel_half | 10.547 | 10.547 | 10.546 | 10.547 | 0.000 |
 | 24 | 1.25 | abelian | stripe | 10.547 | 10.547 | 10.547 | 10.547 | 0.000 |
 
-(The abelian rows at $g=1.1$ and $1.4$ are in the JSON.) Open string at $g=1.4$: $\langle Z\rangle$ on the six string plaquettes goes $-1\to-0.78\ (t=1.96)\to-0.46\ (3.92)\to-0.26\ (7.84)$; off the string it goes $+1\to+0.35$. The string melts but has not dissolved by $t=4g^2$.
+N = 24 thermal values are 4-vector typicality estimates with a statistical uncertainty of about $\pm0.2$ in $\langle H_E\rangle$ and $\pm0.04$ in $\beta$ (audit re-run with 8 fresh vectors: $\langle H_E\rangle=5.27\pm0.16$ for the SU(2) vacuum). Open string at $g=1.4$: $\langle Z\rangle$ on the six string plaquettes goes $-1\to-0.78\ (t=1.96)\to-0.46\ (3.92)\to-0.26\ (7.84)$; off the string it goes $+1\to+0.35$. The string melts but has not dissolved by $t=4g^2$.
 
 ## What it means
-1. **SU(2) thermalizes faster than its abelian twin.** At N = 12 the SU(2) late-time electric energies sit within 2–9% of the thermal anchor. The abelian twin is often 10–25% away, for example from the vacuum: 3.15 against 4.01 at N = 12 and 6.29 against 8.13 at N = 24. The neighbour-dependent flip amplitudes $c(n)=1,\tfrac12$ make the SU(2) dynamics more strongly interacting. This is the physics contrast the frontier run is designed to see.
-2. **Finite-size check.** The vacuum $\beta$ hardly changes from N = 12 to N = 24 (1.448 against 1.440), so the thermal anchor is already close to its large-$N$ value.
-3. **Important: stripe and Néel-half sit at infinite temperature on even-$L_1$ tori.** Any initial state in which exactly half the bonds are cut has $E_E(0)=\langle H_E\rangle_\infty$ and $E_B(0)=0$, so $\beta=0$. This holds for both states on the $4\times3$ torus and for the stripe on the $4\times6$ frontier torus (N = 48). Their thermal values *are* the decohered values, and the electric energy is flagged in all four of those N = 24 runs. For the abelian twin it is even exact: $U=\prod_{p\in A}X_p\prod_pZ_p$ maps $H\to2\langle H_E\rangle_\infty-H$ and maps these states to translates of themselves, so $\langle H_E\rangle(t)$ is exactly constant (confirmed numerically).
+1. **SU(2) versus abelian relaxation depends on the coupling.** The table below gives the late-time distance from the thermal anchor, $|E_\text{late}-E_\text{th}|/E_\text{th}$, at N = 12:
+
+   | g | SU(2) vacuum / neel_half / stripe | abelian vacuum / neel_half / stripe |
+   |---|---|---|
+   | 1.1 | 9.1% / 5.3% / 3.1% | 43.8% / 13.4% / 12.5% |
+   | 1.25 | 12.5% / 2.0% / 2.9% | 21.5% / 6.8% / 5.8% |
+   | 1.4 | 3.7% / 3.4% / 1.2% | 0.3% / 0.9% / 0.7% |
+
+   At $g\le1.25$ the abelian twin is much further from its anchor than SU(2) by $t=4g^2$, most clearly from the vacuum (at N = 24: 6.29 against 8.13, while SU(2) is 13%±4% below its anchor). At $g=1.4$ both are within about 4%, and the abelian twin is closer. "SU(2) relaxes faster" therefore holds only for $g\lesssim1.25$ and a time window of $4g^2$.
+2. **Finite-size check.** The vacuum $\beta$ is $1.448$ (N = 12, exact) and $1.44\pm0.04$ (N = 24, typicality). These agree within the statistical error. The data cannot resolve a finite-size shift smaller than that.
+3. **Important: stripe and Néel-half sit at infinite temperature on even-$L_1$ tori.** Any initial state in which exactly half the bonds are cut has $E_E(0)=\langle H_E\rangle_\infty$ and $E_B(0)=0$, so $\beta=0$. This holds for both states on the $4\times3$ torus and for the stripe on the $4\times6$ frontier torus (N = 48). Their thermal values *are* the decohered values, and the electric energy is flagged in all four of those N = 24 runs. For the abelian twin it is even exact: $U=\prod_{p\in A}X_p\prod_pZ_p$ maps $H\to2\langle H_E\rangle_\infty-H$ and maps these states to translates of themselves. Translations commute with $H$, and $H$ is real (time-reversal symmetric) while the initial states are real, so $\langle H_E\rangle(t)=2\langle H_E\rangle_\infty-\langle H_E\rangle(t)$, i.e. $\langle H_E\rangle(t)$ is exactly constant (confirmed numerically).
 4. **Recommendation for the frontier run.**
-   - The SU(2) vacuum at $g\approx1.25$–$1.4$ is the best candidate. It has a finite positive temperature ($\beta\approx1.4$–$1.6$), a large dynamical signal (its $E_E$ rises from 0 to about 40–45% of the decohered value), no flags, and a clear SU(2)/abelian difference.
+   - The SU(2) vacuum at $g\approx1.25$–$1.4$ is the best candidate. It has a finite positive temperature ($\beta\approx1.4$–$1.6$), a large dynamical signal (its late-time $E_E$ is 77%, 41% and 27% of the decohered value at $g=1.1$, 1.25 and 1.4 for N = 12, and 42% at N = 24, $g=1.25$), no flags, and a clear SU(2)/abelian difference.
    - If an imbalanced state is preferred, the N = 12 stripe works ($\beta\approx-0.6$), but on tori with even $L_1$ (N = 24, 48) it must be replaced by a state with an odd number of excited rows.
    - PLAN M6 prescribes the stripe at N = 48. That run is still useful for the MPS convergence study, because entanglement growth is what limits MPS. It is not a good *physics* target, because its late-time value cannot be told apart from decoherence. This is listed as a decision for Digonto.
 
 ## Problems / assumptions
 - At N = 24, $\langle Z_p\rangle$ is not stored (the schema makes it optional) to keep `summary.json` small. Link energies, the $ZZ$ on bond 0 and the hexagon string are stored.
-- METHODS §5 specifies `expm_multiply` for typicality. At N = 24 it cost about 186 s per vector per $\beta$, so a Chebyshev expansion of $e^{-\beta H/2}$ was used instead. It is identical to $10^{-9}$ in a unit test.
+- METHODS §5 specifies `expm_multiply` for typicality. At N = 24 it cost about 186 s per vector per $\beta$, so a Chebyshev expansion of $e^{-\beta H/2}$ was used instead. It is identical to $10^{-9}$ in a unit test. No error bar is computed in the code; the audit's 8-vector re-run gives the uncertainty quoted above.
 - The flag rule (last 25% of the window, 10%) is a choice. With $t_\text{max}=4g^2$ the slow abelian runs have not fully relaxed.
