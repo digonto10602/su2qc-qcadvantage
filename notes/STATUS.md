@@ -27,4 +27,4 @@
 1. Initial state for the physics comparison at N=48–64: PLAN prescribes stripe, but it is at β=0 (thermal = decohered) on even-L1 tori. Recommend the SU(2) vacuum (β≈1.4) or an odd-row state. Evidence: reports/m3_physics.md §3.
 2. Open-lattice H_E form (audit N1): code uses the bond form; METHODS' 3n_p form differs on open lattices (string E_E(0)=4.41 vs 5.88). Evidence: reports/audits/m1_audit.md.
 3. Trotter step 2δt/g²=0.9 (PLAN M6) departs strongly from e^{-iHt} (audit: N=12/16 Trotter <H_E> 0.54 vs exact 0.31 of E_inf at step 8). Decide δt before cluster QMC thermal-anchor work. Evidence: reports/audits/m6_audit.md.
-4. Tags must be pushed from a machine with tag-push rights (git push origin --tags).
+4. Tags: run `bash scripts/push_tags.sh` from a clone with tag-push rights (recreates them at the recorded commits).
