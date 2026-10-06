@@ -52,7 +52,7 @@ ZNE reduces the error 5.8–15.5× in all four configurations. Rescaling by the 
 
 Figure (iii): estimated raw circuit fidelity $e^{-p_2N_{2q}}$ versus number of first-order steps, for N = 48, 56, 64, 96 and $p_2\in\{7.9\times10^{-4},10^{-3},1.5\times10^{-3}\}$. Data: `results/m5/resources.json`.
 
-At N = 48 a first-order step needs <!--num:results/m5/resources.json#tori/N=48/per_step/native_zz-->456 native-$ZZ$ two-qubit gates. With $p_2=10^{-3}$ the raw fidelity is <!--num:results/m5/resources.json#rows/N=48,steps=4,gate_set=native_zz,p2=0.001/raw_fidelity-->0.161 after 4 steps and <!--num:results/m5/resources.json#rows/N=48,steps=10,gate_set=native_zz,p2=0.001/raw_fidelity-->0.0105 after 10. With mitigation, 4–6 steps at N = 48–64 are realistic on hardware with $p_2\lesssim10^{-3}$. N = 96 at 10 steps is not (raw fidelity <!--num:results/m5/resources.json#rows/N=96,steps=10,gate_set=native_zz,p2=0.0015/raw_fidelity-->1.15e-6 at $p_2=1.5\times10^{-3}$).
+At N = 48 a first-order step needs <!--num:results/m5/resources.json#tori/N=48/per_step/native_zz-->456 native-$ZZ$ two-qubit gates. With $p_2=10^{-3}$ the raw fidelity is <!--num:results/m5/resources.json#rows/N=48,steps=4,gate_set=native_zz,p2=0.001/raw_fidelity-->0.161 after 4 steps and <!--num:results/m5/resources.json#rows/N=48,steps=10,gate_set=native_zz,p2=0.001/raw_fidelity-->0.0105 after 10. ZNE was validated here down to $F\approx0.33$; that makes about 4 steps at N = 48 ($F\approx0.16$–$0.24$ raw) a plausible but not yet validated hardware target with $p_2\lesssim10^{-3}$. N = 96 at 10 steps is not (raw fidelity <!--num:results/m5/resources.json#rows/N=96,steps=10,gate_set=native_zz,p2=0.0015/raw_fidelity-->1.15e-6 at $p_2=1.5\times10^{-3}$).
 
 The MPS code reproduces the exact Trotter state at N = 24 with bond dimension 256 to fidelity <!--num:results/m5/mps_check.json#runs/N=24/fidelity-->0.999999999 (4 steps, $\delta t=0.2$).
 
@@ -62,10 +62,12 @@ The MPS code reproduces the exact Trotter state at N = 24 with bond dimension 25
 Figure (iv): N = 48 ($4\times6$) torus, stripe state, $g=1.25$, $\delta t=0.703$ ($2\delta t/g^2=0.9$), 8 first-order steps at $\chi=32,64,128,256$. Left: $\langle H_E\rangle(t)$. Middle: change between successive $\chi$, against the tolerances. Right: the discarded-weight error estimate. Data: `results/m6/convergence.json` and `results/m6/n48_stripe_g1.25.json`.
 
 - **Criterion.** At each step, successive bond dimensions must agree in $\langle H_E\rangle$ to 1% of the decohered value (<!--num:results/m6/convergence.json#tol_electric_energy-->0.211) and in every $\langle Z_p\rangle$ to 0.01.
-- **Headline.** $\chi=256$ agrees with $\chi=128$ only up to step <!--num:results/m6/convergence.json#last_converged_step/2-->2, i.e. $t=$ <!--num:results/m6/convergence.json#steps/2/time-->1.41. At step 3 the plaquette magnetizations of $\chi=128$ and $256$ already differ by <!--num:results/m6/convergence.json#steps/3/d_z_max/2-->0.013.
-- **Truncation error.** By step 8 the $\chi=256$ error estimate is <!--num:results/m6/convergence.json#steps/8/error_estimate/3-->0.79, so most of the state's weight has been truncated away.
-- **Why the energy alone is misleading.** $\langle H_E\rangle$ itself stays near the decohered value ($\approx21.09$), because this state starts at $\beta=0$ (§3). Local magnetizations are the sensitive probe.
-- **Cost.** The $\chi=256$ run took <!--num:results/m6/n48_stripe_g1.25.json#runs/chi=256/wall_time_s-->6935 s on 4 cloud vCPUs, close to the cloud limit.
+- **Headline.** $\chi=256$ agrees with $\chi=128$ through step <!--num:results/m6/convergence.json#last_converged_step/2-->2, i.e. $t=$ <!--num:results/m6/convergence.json#steps/2/time-->1.41.
+  - Step 3 is marginal: the largest plaquette-magnetization difference is <!--num:results/m6/convergence.json#steps/3/d_z_max/2-->0.013, with 4 of 48 plaquettes over the 0.01 tolerance, and the gap roughly halves with each doubling of $\chi$.
+  - From step 4 on, the results are clearly unconverged.
+- **Truncation error.** The error estimate is cumulative, $1-\prod_k(1-w_k)$ over all truncations. By step 8 it is <!--num:results/m6/convergence.json#steps/8/error_estimate/3-->0.79 for $\chi=256$, i.e. an estimated overlap of only about 0.21 with the untruncated state. The weight kept per Trotter step falls from 0.986 at step 3 to about 0.64 at steps 7–8.
+- **Why the energy alone is misleading.** $\langle H_E\rangle$ varies between 21.0 and 23.6 during the run, yet successive $\chi$ agree on it to within 0.11 at every step (`last_converged_step_electric_energy` = <!--num:results/m6/convergence.json#last_converged_step_electric_energy/2-->8). It is a sum over 72 bonds, so its tolerance acts on an average, while the $Z$ test takes the maximum over plaquettes. Local magnetizations are the sensitive probe.
+- **Cost.** The $\chi=256$ run took <!--num:results/m6/n48_stripe_g1.25.json#runs/chi=256/wall_time_s-->6935 s with single-threaded linear algebra on a shared cloud machine, close to the 2 h cloud limit.
 - **What it means.** At these step sizes, exact-quality classical MPS simulation at N = 48 fails after 2–3 Trotter steps at $\chi\le256$. Larger $\chi$ (GPU) and 2D methods must show whether 4–8 steps are reachable classically. That decides the advantage claim.
 
 ## 7. What remains for the GPU cluster and hardware
@@ -76,7 +78,7 @@ Figure (v): remaining classical and hardware work with target sizes. Data: `resu
 1. **Large-$\chi$ MPS on GPU.** Use $\chi=1024$–$4096$ at N = 48–96 to push the convergence frontier of §6 (`configs/n96_stripe_g1.25_gpu.json`, `scripts/slurm/mps_gpu.sbatch`).
 2. **PEPS with belief-propagation gauging.** A 2D tensor network matched to the honeycomb geometry.
 3. **Pauli propagation** of local observables, which fails in a different way from MPS.
-4. **Sign-free quantum Monte Carlo** for the thermal anchor at N = 48–64. This is possible because $H$ is stoquastic, as verified in M1.
+4. **Sign-free quantum Monte Carlo** for the thermal anchor at N = 48–64. This is possible because $H$ is stoquastic, as verified in M1. **Caveat (M6 audit):** at $2\delta t/g^2=0.9$ the Trotter circuit departs strongly from continuous-time dynamics. In an exact N = 12/16 check from the vacuum, Trotter $\langle H_E\rangle/E_\infty$ was 0.54 against 0.31 exact at step 8, and $\langle H\rangle$ drifted by up to +3.1. A thermal anchor of $H$ is therefore the right reference only if $\delta t$ is reduced; settle $\delta t$ before spending on QMC.
 5. **Hardware runs** of 4–10 steps with echo and ZNE.
 
 **Decision for the team.** Use an initial state that is not at $\beta=0$, such as the vacuum or a state with an odd number of excited rows, for the physics comparison at N = 48–64.
@@ -85,6 +87,7 @@ Figure (v): remaining classical and hardware work with target sizes. Data: `resu
 - **Noise model.** Depolarizing and Markovian only; no coherent errors or crosstalk.
 - **ZNE statistics.** ZNE was evaluated with exact (infinite-shot) values; on hardware it amplifies shot noise by about 2.3×.
 - **Open-lattice $H_E$ form.** METHODS writes two forms of $H_E$ as equal, but they agree only when every plaquette has three neighbours. The code uses the bond form, which matters only on open lattices.
+- **Large Trotter step.** $2\delta t/g^2=0.9$ (M4, M6) makes the circuit a Floquet-like evolution that differs strongly from $e^{-iHt}$. Comparisons with thermal anchors of $H$ are therefore approximate at this $\delta t$.
 - **Thermal anchors at N = 24** use quantum typicality with 4 random vectors and a Chebyshev $e^{-\beta H/2}$ instead of `expm_multiply`, for speed. A unit test shows they agree.
 
 ## Glossary

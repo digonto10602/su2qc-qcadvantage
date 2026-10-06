@@ -23,6 +23,7 @@ Tested on 4 vCPUs and 16 GB. Times are wall-clock.
 
 ```bash
 python3 -m pip install -r requirements.txt
+mkdir -p logs
 python3 scripts/gate_counts.py                 # M2 -> results/m2/gate_counts.json (seconds)
 nohup scripts/run_m3_batch.sh > logs/m3.log 2>&1 &   # M3: run_m3 n12 / string / n24 x6 / assemble -> results/m3 (~4 h)
 python3 scripts/run_m4.py                      # M4 -> results/m4/noise_runs.json + figure (~1.5 h)

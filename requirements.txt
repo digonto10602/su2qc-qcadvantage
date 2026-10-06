@@ -5,3 +5,4 @@ qiskit-aer
 matplotlib
 pytest
 quimb
+numba

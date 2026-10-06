@@ -111,8 +111,9 @@ def fig4():
                                           1e-16), "o-", ms=3, label=rf"$\Delta E$ {a}->{b}")
         axs[1].semilogy(steps, np.maximum([s["d_z_max"][i] for s in conv["steps"]], 1e-16),
                         "s--", ms=3, color=f"C{i}", label=rf"max $\Delta Z$ {a}->{b}")
-    axs[1].axhline(conv["tol_electric_energy"], color="k", ls="-", lw=0.8)
-    axs[1].axhline(conv["tol_z"], color="k", ls="--", lw=0.8)
+    axs[1].axhline(conv["tol_electric_energy"], color="k", ls="-", lw=0.8, label="tol E")
+    axs[1].axhline(conv["tol_z"], color="k", ls="--", lw=0.8, label="tol Z")
+    axs[1].set_ylim(1e-7, 1)
     axs[1].set_xlabel("Trotter step"); axs[1].set_title("change between successive chi")
     axs[1].legend(fontsize=7)
     axs[2].set_xlabel("Trotter step"); axs[2].set_ylabel("discarded-weight error estimate")
@@ -124,13 +125,13 @@ def fig4():
 
 def fig5():
     items = load("results/m6/roadmap.json")["items"]
-    fig, ax = plt.subplots(figsize=(12, 1.2 + 1.3 * len(items)))
+    fig, ax = plt.subplots(figsize=(13, 1.2 + 1.6 * len(items)))
     ax.axis("off")
     for k, it in enumerate(items):
         y = 1 - (k + 0.5) / len(items)
-        ax.text(0.0, y, it["title"], fontsize=11, weight="bold", va="center")
+        ax.text(0.0, y, "\n".join(textwrap.wrap(it["title"], 30)), fontsize=10, weight="bold", va="center")
         ax.text(0.27, y, "N = " + ", ".join(map(str, it["N"])), fontsize=10, va="center")
-        ax.text(0.40, y, "\n".join(textwrap.wrap(it["purpose"], 85)), fontsize=8.5, va="center")
+        ax.text(0.40, y, "\n".join(textwrap.wrap(it["purpose"], 75)), fontsize=8, va="center")
     ax.set_title("What remains for the GPU cluster and for hardware", fontsize=13)
     fig.tight_layout()
     fig.savefig(OUT / "fig5_cluster_roadmap.png", dpi=120)
