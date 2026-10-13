@@ -425,6 +425,24 @@ The audit also *confirmed* (no action needed): Chebyshev propagation agrees with
 
 ---
 
+### 5.7 Post-M6 fixes (audit items and code review)
+- **Thermal error bars.** `thermal_typicality` now returns jackknife errors (leave one random vector out), and the β search warns when it misses the 2% energy match. Re-evaluating the six N = 24 anchors at the stored β reproduces the stored values exactly (`results/m3/thermal_errors_n24.json`):
+  - SU(2) vacuum $\langle H_E\rangle_\text{th}=5.15\pm0.27$, total energy $-0.002\pm0.56$, so its late-time value of 4.47 is 2.5σ below the anchor;
+  - abelian vacuum $8.129\pm0.004$;
+  - the four $\beta=0$ runs $\pm0.0003$.
+- **Readout-corrected echo** (`results/m4/echo_readout_corrected.json`), using $F^2=(P-1/D)/((1-r)^n-1/D)$. The corrected values are 0.868, 0.690, 0.429 and 0.372 against $F_\text{pred}$ = 0.840, 0.645, 0.376 and 0.334. The 3–14% excess is therefore not caused by readout; it comes from gate errors that leave the returned bit string unchanged, so $F_\text{pred}$ is a lower bound.
+- **Resource table.** A second column, `raw_fidelity_depolarizing` $=(1-15p_2/16)^{N_{2q}}$, uses the M4 convention. For example, at N = 48, 4 steps, $p_2=10^{-3}$, it gives 0.181 against 0.161 for $e^{-p_2N_{2q}}$.
+- **Code review (10 findings, all fixed):**
+  - `gate_counts.py` now runs from any directory;
+  - `run_classical.py` resumes from a partial output file (`--restart` overrides it);
+  - MPS observables stay on the GPU, with $O(n\chi^2)$ memory;
+  - the M3 batch stops on the first error;
+  - one diagonalization and one sparse build per Hamiltonian;
+  - one shared H|ψ⟩ kernel;
+  - decohered values are computed rather than hard-coded;
+  - the GPU Slurm template requests memory.
+- **Verification after the fixes.** 171 tests pass; LOCK OK; `check_summary` 21/21; `analyze_convergence` reproduces `convergence.json` byte for byte; the MPS check gives N = 24 $1-F=1.1\times10^{-9}$ again.
+
 ## 6. Data for plotting
 
 For every figure: the path, what it shows, the data as CSV (time series subsampled to at most about 21 points: every 2nd of the 41 points at N = 12, every 2nd of 25 at N = 24; short series are complete), and a short matplotlib snippet that re-plots it from the JSON file. Run the snippets from the repository root. All values are rounded to 4 decimals; the full-resolution data are in the JSON files.
@@ -1471,7 +1489,7 @@ plt.tight_layout(); plt.show()
 6. **Global rescaling fails.** Dividing by the echo fidelity makes the error 2.7 to 3.8 times worse (Section 5.4). Only ZNE is validated, and only down to $F\approx0.33$; at N = 48 the raw fidelity after 4 steps is 0.16 to 0.24, so the hardware targets are plausible but untested below $F\approx0.33$. On hardware ZNE amplifies shot noise by about 2.3.
 7. **$\delta t=0.2$ in the M5 check.** The $\chi=256$ agreement ($1-F\sim10^{-9}$, max bond 204 at N = 24) was shown at $\delta t=0.2$, where entanglement is small, because at $\delta t\approx0.7$ $\chi=256$ cannot reach $1-10^{-6}$ at N = 24. It validates the code, not the M6 convergence. The MPS snake order (lines along the shorter side) was chosen from a $\delta t=0.2$ Schmidt-tail comparison.
 8. **Timing caveat.** The N = 48 wall times were measured single-threaded and overlapped with another job (thread oversubscription between numba and OpenBLAS had slowed SVDs about 400 times until `OPENBLAS_NUM_THREADS=1` was set).
-9. **Non-blocking audit items still open** (STATUS): (a) no jackknife error bars in the typicality code (M3 N1; also the 2% energy-match assertion after `max_evals`, N2); (b) `noise.py` reads the private Aer attribute `_default_readout_error` (M4 N6) and could silently return 0 after an upgrade; (c) $F_\text{echo}$ includes readout and the initial $X$ gates but $F_\text{pred}$ does not (M4 N5); (d) the resource table uses $e^{-p_2N}$ while M4 uses $15p_2/16$ per gate (M5 N8); (e) the MPS observable sweep and GPU host transfers need optimisation before N = 96 (M5 N9); (f) M1 N3 and N4, M2 N10 wording; (g) requirements are not version-pinned (tested: qiskit 2.5.2, qiskit-aer 0.17.2, quimb 1.15.0, numba 0.68.0). Smaller points: N = 16 was not run in M4; at N = 24 $\langle Z_p\rangle$ is not stored.
+9. **Non-blocking audit items: resolved after M6** (see section 5.7). Jackknife error bars and a 2% energy-match warning in typicality; the readout rate is read through Aer's public `to_dict()`; a readout-corrected echo is available; the resource table carries both fidelity conventions; MPS observables run on the GPU backend; tested versions are pinned in `requirements-tested.txt`. Still open: N = 16 was not run in M4, and at N = 24 $\langle Z_p\rangle$ is not stored.
 
 ---
 

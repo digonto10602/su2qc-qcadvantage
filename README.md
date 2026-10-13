@@ -5,7 +5,7 @@ Code toward a beyond-classical quantum simulation of minimally truncated (2+1)D 
 **Status:** cloud phase complete (M1–M6, tag `v0.1-pre-cluster`). Main findings: [`reports/collaborator_summary.md`](reports/collaborator_summary.md). Full report with plotting data: [`reports/project_report.md`](reports/project_report.md).
 
 ```bash
-python3 -m pip install -r requirements.txt
+python3 -m pip install -r requirements.txt   # or requirements-tested.txt for the exact tested versions
 python3 -m pytest -q          # acceptance tests (m1-m6 locked) + unit tests
 ```
 
@@ -22,7 +22,7 @@ The physics model is the one-qubit-per-plaquette SU(2) Hamiltonian of Ciavarella
 Tested on 4 vCPUs and 16 GB. Times are wall-clock.
 
 ```bash
-python3 -m pip install -r requirements.txt
+python3 -m pip install -r requirements.txt   # or requirements-tested.txt for the exact tested versions
 mkdir -p logs
 python3 scripts/gate_counts.py                 # M2 -> results/m2/gate_counts.json (seconds)
 nohup scripts/run_m3_batch.sh > logs/m3.log 2>&1 &   # M3: run_m3 n12 / string / n24 x6 / assemble -> results/m3 (~4 h)
