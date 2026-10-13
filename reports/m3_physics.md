@@ -48,7 +48,12 @@ Compare the late-time values with the **thermal anchor** and the **decohered val
 | 24 | 1.25 | abelian | neel_half | 10.547 | 10.547 | 10.546 | 10.547 | 0.000 |
 | 24 | 1.25 | abelian | stripe | 10.547 | 10.547 | 10.547 | 10.547 | 0.000 |
 
-N = 24 thermal values are 4-vector typicality estimates with a statistical uncertainty of about $\pm0.2$ in $\langle H_E\rangle$ and $\pm0.04$ in $\beta$ (audit re-run with 8 fresh vectors: $\langle H_E\rangle=5.27\pm0.16$ for the SU(2) vacuum). Open string at $g=1.4$: $\langle Z\rangle$ on the six string plaquettes goes $-1\to-0.78\ (t=1.96)\to-0.46\ (3.92)\to-0.26\ (7.84)$; off the string it goes $+1\to+0.35$. The string melts but has not dissolved by $t=4g^2$.
+N = 24 thermal values are 4-vector typicality estimates. Jackknife errors over the 4 vectors (`scripts/thermal_errors_n24.py` → `results/m3/thermal_errors_n24.json`) reproduce the stored values exactly and give:
+- SU(2) vacuum: $\langle H_E\rangle_\text{th}=5.15\pm0.27$, total energy $-0.002\pm0.56$ against the target $0$.
+- Abelian vacuum: $8.129\pm0.004$.
+- The four $\beta=0$ runs: $\pm0.0003$.
+
+So for the SU(2) vacuum the 2% energy match holds for the mean but is not statistically resolved, and $\beta$ is uncertain at about the $\pm0.04$ level (an earlier 8-fresh-vector audit re-run gave $\langle H_E\rangle=5.27\pm0.16$). Open string at $g=1.4$: $\langle Z\rangle$ on the six string plaquettes goes $-1\to-0.78\ (t=1.96)\to-0.46\ (3.92)\to-0.26\ (7.84)$; off the string it goes $+1\to+0.35$. The string melts but has not dissolved by $t=4g^2$.
 
 ## What it means
 1. **SU(2) versus abelian relaxation depends on the coupling.** The table below gives the late-time distance from the thermal anchor, $|E_\text{late}-E_\text{th}|/E_\text{th}$, at N = 12:
@@ -59,7 +64,7 @@ N = 24 thermal values are 4-vector typicality estimates with a statistical uncer
    | 1.25 | 12.5% / 2.0% / 2.9% | 21.5% / 6.8% / 5.8% |
    | 1.4 | 3.7% / 3.4% / 1.2% | 0.3% / 0.9% / 0.7% |
 
-   At $g\le1.25$ the abelian twin is much further from its anchor than SU(2) by $t=4g^2$, most clearly from the vacuum (at N = 24: 6.29 against 8.13, while SU(2) is 13%±4% below its anchor). At $g=1.4$ both are within about 4%, and the abelian twin is closer. "SU(2) relaxes faster" therefore holds only for $g\lesssim1.25$ and a time window of $4g^2$.
+   At $g\le1.25$ the abelian twin is much further from its anchor than SU(2) by $t=4g^2$, most clearly from the vacuum (at N = 24: 6.29 against 8.13, while SU(2) is 13%±5% below its anchor, a 2.5σ gap). At $g=1.4$ both are within about 4%, and the abelian twin is closer. "SU(2) relaxes faster" therefore holds only for $g\lesssim1.25$ and a time window of $4g^2$.
 2. **Finite-size check.** The vacuum $\beta$ is $1.448$ (N = 12, exact) and $1.44\pm0.04$ (N = 24, typicality). These agree within the statistical error. The data cannot resolve a finite-size shift smaller than that.
 3. **Important: stripe and Néel-half sit at infinite temperature on even-$L_1$ tori.** Any initial state in which exactly half the bonds are cut has $E_E(0)=\langle H_E\rangle_\infty$ and $E_B(0)=0$, so $\beta=0$. This holds for both states on the $4\times3$ torus and for the stripe on the $4\times6$ frontier torus (N = 48). Their thermal values *are* the decohered values, and the electric energy is flagged in all four of those N = 24 runs. For the abelian twin it is even exact: $U=\prod_{p\in A}X_p\prod_pZ_p$ maps $H\to2\langle H_E\rangle_\infty-H$ and maps these states to translates of themselves. Translations commute with $H$, and $H$ is real (time-reversal symmetric) while the initial states are real, so $\langle H_E\rangle(t)=2\langle H_E\rangle_\infty-\langle H_E\rangle(t)$, i.e. $\langle H_E\rangle(t)$ is exactly constant (confirmed numerically).
 4. **Recommendation for the frontier run.**

@@ -1,0 +1,77 @@
+{
+ "method": "jackknife over the 4 typicality vectors (seed 1234) at the stored beta",
+ "runs": [
+  {
+   "state": "vacuum",
+   "model": "su2",
+   "beta": 1.4400754953322634,
+   "electric_energy": 5.154210396279148,
+   "electric_energy_err": 0.2746091799892386,
+   "energy": -0.001967918965819509,
+   "energy_err": 0.56411485831977,
+   "stored_electric_energy": 5.154210396279129,
+   "reproduces_stored": true,
+   "target_energy": 0.0
+  },
+  {
+   "state": "vacuum",
+   "model": "abelian",
+   "beta": 0.9976902223612637,
+   "electric_energy": 8.128858929554994,
+   "electric_energy_err": 0.00415256191494019,
+   "energy": -0.0020635296724785456,
+   "energy_err": 0.018156559829628577,
+   "stored_electric_energy": 8.128858929555031,
+   "reproduces_stored": true,
+   "target_energy": 0.0
+  },
+  {
+   "state": "neel_half",
+   "model": "su2",
+   "beta": -3.390394535021657e-05,
+   "electric_energy": 10.546945791499553,
+   "electric_energy_err": 0.0002862861941449888,
+   "energy": 10.546879144655223,
+   "energy_err": 0.0003822275472284919,
+   "stored_electric_energy": 10.54694579149963,
+   "reproduces_stored": true,
+   "target_energy": 10.546875
+  },
+  {
+   "state": "neel_half",
+   "model": "abelian",
+   "beta": 0.00012427717779356362,
+   "electric_energy": 10.546457192945363,
+   "electric_energy_err": 0.00028626619723734817,
+   "energy": 10.545407984754783,
+   "energy_err": 0.0005788444277565123,
+   "stored_electric_energy": 10.546457192945343,
+   "reproduces_stored": true,
+   "target_energy": 10.546875
+  },
+  {
+   "state": "stripe",
+   "model": "su2",
+   "beta": -0.0002813396896902409,
+   "electric_energy": 10.547710094629396,
+   "electric_energy_err": 0.00028633783905639615,
+   "energy": 10.54823744722905,
+   "energy_err": 0.0003821799291449109,
+   "stored_electric_energy": 10.547710094629478,
+   "reproduces_stored": true,
+   "target_energy": 10.546875
+  },
+  {
+   "state": "stripe",
+   "model": "abelian",
+   "beta": -0.00011731530984271377,
+   "electric_energy": 10.547203434361375,
+   "electric_energy_err": 0.00028629138539835303,
+   "energy": 10.548529621785868,
+   "energy_err": 0.0005785106181785386,
+   "stored_electric_energy": 10.54720343436148,
+   "reproduces_stored": true,
+   "target_energy": 10.546875
+  }
+ ]
+}
