@@ -39,6 +39,8 @@ def main():
     ap.add_argument("--config", required=True)
     ap.add_argument("--out")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--restart", action="store_true",
+                    help="ignore an existing output file instead of resuming from it")
     args = ap.parse_args()
     cfg = json.loads(pathlib.Path(args.config).read_text())
     errs = validate(cfg)
@@ -57,14 +59,25 @@ def main():
     lat = HoneycombTorus(cfg["L1"], cfg["L2"])
     init = initial_state(lat, cfg["state"])
     result = {"config": cfg, "runs": []}
+    if out.exists() and not args.restart:
+        prev = json.loads(out.read_text())
+        if prev.get("config") == cfg:                 # resume: keep finished chi values
+            result["runs"] = [r for r in prev.get("runs", []) if r.get("chi") in cfg["chi"]]
+            print(f"resuming: chi already done {[r['chi'] for r in result['runs']]}", flush=True)
+        else:
+            sys.exit(f"{out} exists with a different config; use --restart or another --out")
     out.parent.mkdir(parents=True, exist_ok=True)
+    done = {r["chi"] for r in result["runs"]}
     for chi in cfg["chi"]:
+        if chi in done:
+            continue
         r = simulate_mps(lat, cfg["g"], cfg["dt"], cfg["steps"], order=cfg["order"],
                          abelian=cfg["abelian"], initial=init, chi=chi, cutoff=cfg["cutoff"],
                          backend=cfg["backend"])
         result["runs"].append({k: r[k] for k in (
             "chi", "times", "electric_energy", "z", "error_estimate", "error_estimate_per_step",
             "max_bond", "wall_time_s")})
+        result["runs"].sort(key=lambda x: cfg["chi"].index(x["chi"]))   # keep config order
         out.write_text(json.dumps(result))        # checkpoint after every chi
         print(time.strftime("%H:%M:%S"), f"chi={chi}: err={r['error_estimate']:.3e} "
               f"max_bond={r['max_bond']} ({r['wall_time_s']:.0f}s)", flush=True)

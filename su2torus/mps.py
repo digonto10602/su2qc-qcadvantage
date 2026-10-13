@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import time
 
+import autoray as ar
 import numpy as np
 
 from .trotter import trotter_circuit, trotter_step
@@ -67,64 +68,68 @@ def _to_numpy(x):
     return np.asarray(x)
 
 
-def _site_arrays(psi):
-    """MPS tensors as (left, phys, right) numpy arrays (dummy bonds of size 1 at the ends)."""
+def _site_array(psi, k):
+    """Site tensor k as a (left, phys, right) array in its own backend (numpy/cupy/torch);
+    dummy bonds of size 1 at the chain ends. No host copy."""
     n = psi.L
-    out = []
-    for k in range(n):
-        t = psi[k]
-        left = [i for i in t.inds if k > 0 and i in psi[k - 1].inds]
-        right = [i for i in t.inds if k < n - 1 and i in psi[k + 1].inds]
-        arr = _to_numpy(t.transpose(*left, psi.site_ind(k), *right).data)
-        if not left:
-            arr = arr[None]
-        if not right:
-            arr = arr[..., None]
-        out.append(np.asarray(arr, dtype=np.complex128))
-    return out
+    t = psi[k]
+    left = [i for i in t.inds if k > 0 and i in psi[k - 1].inds]
+    right = [i for i in t.inds if k < n - 1 and i in psi[k + 1].inds]
+    arr = t.transpose(*left, psi.site_ind(k), *right).data
+    if not left:
+        arr = arr[None]
+    if not right:
+        arr = arr[..., None]
+    return arr
 
 
-def _transfer(X, A, Ac):
-    """Left environment step: X'_{cd} = sum_{a,b,p} X_{ab} A_{apc} Ac_{bpd}  (Ac = conj of the
-    bra tensor). Explicit tensordots, no per-call path planning."""
-    return np.tensordot(np.tensordot(X, A, axes=(0, 0)), Ac, axes=([0, 1], [0, 1]))
+def _transfer(X, A, Z=False):
+    """Left environment step X'_{cd} = sum X_{ab} A_{apc} conj(A)_{bpd}, with a Z = diag(1,-1)
+    insertion on the physical index if Z. Backend-agnostic (autoray)."""
+    T = ar.do("tensordot", X, A, axes=(0, 0))                    # (b, p, c)
+    if Z:
+        T = ar.do("concatenate", [T[:, :1], -T[:, 1:]], axis=1)
+    return ar.do("tensordot", T, ar.do("conj", A), axes=([0, 1], [0, 1]))
+
+
+def _close(X, R):
+    return float(np.real(_to_numpy(ar.do("sum", X * R))))
 
 
 def _observables(lat, psi, site_of, g):
-    """(<H_E>, <Z_p> in plaquette order) of an MPS, by left/right environment sweeps.
-    Z is diagonal, so Z-insertions are site tensors with the phys index weighted by (1,-1).
-    Bonds are grouped by their left site so that each left environment is propagated once
-    to all of its partners (cost ~ sum over left sites of the longest bond, not over bonds)."""
-    A = _site_arrays(psi)
-    Ac = [x.conj() for x in A]
-    zw = np.array([1.0, -1.0])[None, :, None]
-    AZ = [x * zw for x in A]
-    n = len(A)
-    L = [np.ones((1, 1), complex)]
-    for k in range(n):
-        L.append(_transfer(L[-1], A[k], Ac[k]))
+    """(<H_E>, <Z_p> in plaquette order) of an MPS, by environment sweeps on the MPS's own
+    backend (GPU arrays stay on the GPU). Memory: the n right environments (chi^2 each) plus
+    O(1) left environments; site tensors are taken from the MPS as needed.
+    Bonds are grouped by left site so each left environment is propagated once to all partners."""
+    n = psi.L
+    A0 = _site_array(psi, n - 1)
+    ones = ar.do("ones", (1, 1), like=A0)
     R = [None] * (n + 1)
-    R[n] = np.ones((1, 1), complex)
+    R[n] = ones
     for k in range(n - 1, -1, -1):
-        R[k] = np.tensordot(np.tensordot(A[k], R[k + 1], axes=(2, 0)), Ac[k],
-                            axes=([1, 2], [1, 2]))
-    norm = np.real(L[n][0, 0])
-    zsite = np.array([np.real(np.sum(_transfer(L[k], AZ[k], Ac[k]) * R[k + 1]))
-                      for k in range(n)]) / norm
+        A = _site_array(psi, k)
+        R[k] = ar.do("tensordot", ar.do("tensordot", A, R[k + 1], axes=(2, 0)),
+                     ar.do("conj", A), axes=([1, 2], [1, 2]))
+    norm = float(np.real(_to_numpy(R[0][0, 0])))
     partners: dict = {}
     for p, q in lat.bonds:
         i, j = sorted((site_of[p], site_of[q]))
         partners.setdefault(i, []).append(j)
+    zsite = np.zeros(n)
     zzsum = 0.0
-    for i, js in partners.items():
-        need = sorted(js)
-        X = _transfer(L[i], AZ[i], Ac[i])
+    L = ones
+    for i in range(n):
+        Ai = _site_array(psi, i)
+        X = _transfer(L, Ai, Z=True)
+        zsite[i] = _close(X, R[i + 1]) / norm
         k = i + 1
-        for j in need:
+        for j in sorted(partners.get(i, [])):
             while k < j:
-                X = _transfer(X, A[k], Ac[k])
+                X = _transfer(X, _site_array(psi, k))
                 k += 1
-            zzsum += np.real(np.sum(_transfer(X, AZ[j], Ac[j]) * R[j + 1]))
+            zzsum += _close(_transfer(X, _site_array(psi, j), Z=True), R[j + 1])
+        L = _transfer(L, Ai)
+        R[i] = None                                    # free right environments as we pass
     he = len(lat.bonds) - zzsum / norm
     z = np.array([zsite[site_of[p]] for p in range(lat.n)])
     return 3.0 * g ** 2 / 16.0 * he, z

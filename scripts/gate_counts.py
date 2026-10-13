@@ -1,6 +1,9 @@
 """M2: true two-qubit counts per plaquette per Trotter step -> results/m2/gate_counts.json."""
 import json
 import pathlib
+import sys
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 from su2torus.lattice import HoneycombTorus
 from su2torus.trotter import trotter_step, trotter_circuit, two_qubit_counts
 
@@ -21,6 +24,7 @@ for (L1, L2, per) in [(3, 2, True), (4, 3, True), (4, 6, True), (3, 4, False)]:
                 row["fused_per_plaquette_per_step"] = {k: v / lat.n for k, v in fused.items()}
             rows.append(row)
 out = ROOT / "results" / "m2" / "gate_counts.json"
+out.parent.mkdir(parents=True, exist_ok=True)
 out.write_text(json.dumps(rows, indent=1))
 for r in rows:
     print(r["L1"], r["L2"], r["periodic"], r["model"], r["order"], r["per_plaquette_per_step"],

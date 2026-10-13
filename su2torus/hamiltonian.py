@@ -109,7 +109,8 @@ def _lat_key(lat, g):
     return (lat.L1, lat.L2, lat.periodic, float(g))
 
 
-def _diag_cached(lat, g):
+def electric_diagonal_cached(lat, g):
+    """electric_diagonal, cached (one 2^n float64 array per (lattice, g); shared with apply_h)."""
     key = _lat_key(lat, g)
     if key not in _DIAG_CACHE:
         if len(_DIAG_CACHE) > 2:
@@ -124,31 +125,6 @@ def _nb_array(lat):
     for p, x in enumerate(lat.neighbors):
         nb[p, :len(x)] = x
     return nb
-
-
-if numba is not None:
-    @numba.njit(parallel=True, cache=True)
-    def _apply_numba(psi, diag, nb, inv_g2, abelian, out):
-        n = nb.shape[0]
-        k = nb.shape[1]
-        tab = np.empty(k + 1)
-        for m in range(k + 1):
-            tab[m] = -inv_g2 * 0.5 ** m
-        for b in numba.prange(psi.shape[0]):
-            acc = diag[b] * psi[b]
-            for p in range(n):
-                if abelian:
-                    amp = -inv_g2
-                else:
-                    m = 0
-                    for t in range(k):
-                        q = nb[p, t]
-                        if q >= 0:
-                            m += (b >> q) & 1
-                    amp = tab[m]
-                acc += amp * psi[b ^ (1 << p)]
-            out[b] = acc
-        return out
 
 
 if numba is not None:
@@ -191,7 +167,7 @@ def cheb_recur(lat, g, abelian=False):
             t0 += scale * (_apply_numpy(lat, g, t1, abelian) - c * t1) / r
         f.fused = True
         return f
-    diag, nb = _diag_cached(lat, g), _nb_array(lat)
+    diag, nb = electric_diagonal_cached(lat, g), _nb_array(lat)
 
     def f(t1, t0, c, r, scale):
         _cheb_numba(t1, t0, diag, nb, 1.0 / g ** 2, bool(abelian), c, r, scale)
@@ -209,7 +185,7 @@ def axpy(a, x, y):
 
 def _apply_numpy(lat, g, psi, abelian):
     n = lat.n
-    diag = _diag_cached(lat, g)
+    diag = electric_diagonal_cached(lat, g)
     out = diag * psi
     t = psi.reshape((2,) * n)
     o = out.reshape((2,) * n)
@@ -239,7 +215,9 @@ def apply_h(lat, g: float, psi, abelian: bool = False):
     if numba is not None:
         dt = np.result_type(psi.dtype, np.float64)
         psi = psi.astype(dt, copy=False)
-        out = np.empty_like(psi)
-        return _apply_numba(psi, _diag_cached(lat, g), _nb_array(lat), 1.0 / g ** 2,
-                            bool(abelian), out)
+        out = np.zeros_like(psi)
+        # H psi = the Chebyshev kernel with c = 0, r = 1, scale = 1 and prev = 0 (one H definition)
+        _cheb_numba(psi, out, electric_diagonal_cached(lat, g), _nb_array(lat), 1.0 / g ** 2,
+                    bool(abelian), 0.0, 1.0, 1.0)
+        return out
     return _apply_numpy(lat, g, psi, abelian)

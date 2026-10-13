@@ -1,5 +1,6 @@
 #!/bin/bash
 # M3 batch: N=12 (if missing), open string, the six N=24 runs (one process each), assemble.
+set -euo pipefail
 cd "$(dirname "$0")/.."
 [ -f results/m3/parts/n12.json ] || python3 scripts/run_m3.py n12
 [ -f results/m3/parts/string_open_3x4_g1.4.json ] || python3 scripts/run_m3.py string

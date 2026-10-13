@@ -24,7 +24,7 @@ def main():
         g, beta = r["g"], r["thermal"]["beta"]
         bounds = json.loads((ROOT / "results" / "m3" / "parts" /
                              f"bounds_n24_{r['model']}.json").read_text())
-        diag = hm.electric_diagonal(lat, g)
+        diag = hm.electric_diagonal_cached(lat, g)
         t0 = time.time()
         res = thermal.thermal_typicality(lambda v: hm.apply_h(lat, g, v, ab), 2 ** lat.n, beta,
                                          {"electric_energy": lambda v: diag * v}, 4, 1234,

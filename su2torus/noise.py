@@ -48,14 +48,8 @@ def _readout_rate(noise) -> float:
 
 
 def echo_fidelity_readout_corrected(circ, initial, noise, shots=None, seed=None) -> float:
-    """As echo_fidelity, but with the return probability divided by (1-r)^n, the chance that
-    readout leaves the n measured bits unflipped. This makes the echo comparable with
-    predicted_fidelity, which excludes readout."""
-    D = 2 ** circ.num_qubits
-    r = _readout_rate(noise) if noise is not None else 0.0
-    P = run_noisy(echo_circuit(circ, initial), noise, shots, seed)[sum(1 << p for p in initial or [])]
-    P = P / (1 - r) ** circ.num_qubits
-    return float(np.sqrt(max(0.0, (P - 1 / D) / (1 - 1 / D))))
+    """echo_fidelity with the readout error removed (see echo_fidelity, readout_corrected)."""
+    return echo_fidelity(circ, initial, noise, shots, seed, readout_corrected=True)
 
 
 def _apply_readout(probs, n, r):
@@ -115,18 +109,23 @@ def echo_circuit(circ, initial):
     return qc
 
 
-def echo_fidelity(circ, initial, noise, shots=None, seed=None) -> float:
-    """Loschmidt echo x(initial) circ circ^-1: return probability P of the initial bitstring;
-    global-depolarizing model P = F^2 + (1 - F^2)/D gives F = sqrt((P - 1/D)/(1 - 1/D))."""
-    D = 2 ** circ.num_qubits
+def echo_fidelity(circ, initial, noise, shots=None, seed=None, readout_corrected=False) -> float:
+    """Loschmidt echo x(initial) circ circ^-1: return probability P of the initial bitstring.
+    Global-depolarizing model: P = F^2 + (1 - F^2)/D, so F = sqrt((P - 1/D)/(1 - 1/D)).
+    readout_corrected=True: symmetric readout r leaves the returned string intact with
+    probability (1-r)^n but maps the uniform background onto itself, so
+    P = (1-r)^n F^2 + (1 - F^2)/D  and  F^2 = (P - 1/D)/((1-r)^n - 1/D)
+    (comparable with predicted_fidelity, which excludes readout)."""
+    n = circ.num_qubits
+    D = 2 ** n
     P = run_noisy(echo_circuit(circ, initial), noise, shots, seed)[sum(1 << p for p in initial or [])]
-    return float(np.sqrt(max(0.0, (P - 1 / D) / (1 - 1 / D))))
+    keep = (1 - _readout_rate(noise)) ** n if (readout_corrected and noise is not None) else 1.0
+    return float(np.sqrt(max(0.0, (P - 1 / D) / (keep - 1 / D))))
 
 
 def mitigate_rescale(noisy, F, O_inf):
-    """O_inf + (noisy - O_inf) / F."""
-    return O_inf + (np.asarray(noisy) - O_inf) / F if np.ndim(noisy) else \
-        O_inf + (noisy - O_inf) / F
+    """O_inf + (noisy - O_inf) / F  (scalars or numpy arrays)."""
+    return O_inf + (np.asarray(noisy) - O_inf) / F
 
 
 def zne(values, scales=(1, 3, 5)) -> float:

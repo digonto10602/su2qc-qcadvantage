@@ -86,8 +86,8 @@ def part_n12():
     for g in (1.1, 1.25, 1.4):
         for model in MODELS:
             ab = model == "abelian"
-            H = hm.build_sparse(lat, g, ab)
-            HE, _, _ = hm.split_sparse(lat, g, ab)
+            HE, HA, HB = hm.split_sparse(lat, g, ab)
+            H = (HE + HA + HB).tocsr()
             for state in STATES:
                 exc = initial_state(lat, state)
                 rec = base_record(N, g, state, model, lat)
@@ -123,7 +123,7 @@ def part_n24(state, model, beta0):
                             bounds=bounds))
     log(f"dynamics done ({time.time() - t0:.0f}s)")
     E0 = rec["electric_energy"][0] + rec["magnetic_energy"][0]
-    diag = hm.electric_diagonal(lat, g)
+    diag = hm.electric_diagonal_cached(lat, g)
     beta, th, hist = thermal.beta_for_energy_typicality(
         mv, dim, E0, {"electric_energy": lambda v: diag * v}, beta0=beta0, step=0.05,
         n_samples=4, seed=1234, max_evals=8, bounds=bounds,

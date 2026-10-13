@@ -3,10 +3,14 @@ Usage: python3 scripts/analyze_convergence.py [--in PATH] [--out PATH]   (determ
 import argparse
 import json
 import pathlib
+import sys
 
 import numpy as np
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from su2torus.lattice import HoneycombTorus  # noqa: E402
+from su2torus.observables import infinite_temperature  # noqa: E402
 TOL_Z = 0.01
 
 
@@ -30,7 +34,8 @@ def main():
     runs = sorted(d["runs"], key=lambda r: r["chi"])
     chis = [r["chi"] for r in runs]
     n = 2 * cfg["L1"] * cfg["L2"]
-    e_inf = cfg["g"] ** 2 / 2 * 3 / 8 * (3 * n // 2)
+    lat = HoneycombTorus(cfg["L1"], cfg["L2"])          # run_classical always uses the torus
+    e_inf = infinite_temperature(lat, cfg["g"])["electric_energy"]
     tol_e = 0.01 * e_inf
     pairs = [[chis[i], chis[i + 1]] for i in range(len(chis) - 1)]
     steps = []

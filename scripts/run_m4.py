@@ -68,11 +68,11 @@ def main():
     res = ROOT / "results" / "m4"
     res.mkdir(parents=True, exist_ok=True)
     (res / "noise_runs.json").write_text(json.dumps(out, indent=1))
-    figure(out, res)
+    figure(out, res, O_inf)
     log("done")
 
 
-def figure(out, res):
+def figure(out, res, O_inf):
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -86,8 +86,8 @@ def figure(out, res):
                              ("rescaled_electric_energy", "echo rescaled", "C1s--"),
                              ("zne_electric_energy", "ZNE (1,3,5)", "C2^-")):
             axs[j].plot(s, [r[key] for r in rs], st, label=lab)
-        axs[j].axhline(5.2734375, color="k", ls=":", lw=0.8, label="decohered")
-        axs[j].set_title(f"N=12, stripe, g=1.25, p2={p2:g}")
+        axs[j].axhline(O_inf, color="k", ls=":", lw=0.8, label="decohered")
+        axs[j].set_title(f"N={out['N']}, {out['state']}, g={out['g']}, p2={p2:g}")
         axs[j].set_xlabel("Trotter steps"); axs[j].set_ylabel("<H_E>")
     axs[0].legend(fontsize=7)
     fig.tight_layout()

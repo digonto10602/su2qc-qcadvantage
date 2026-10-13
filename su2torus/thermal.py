@@ -12,13 +12,14 @@ from scipy.special import ive
 _EIG_CACHE: dict = {}
 
 
-def _eig(H, vectors=True):
-    key = (id(H), H.shape, vectors)
+def _eig(H):
+    """(w, V) of H by full diagonalization, cached for the last H (n <= 14), so that
+    beta_for_energy_exact followed by thermal_exact diagonalizes only once."""
+    key = (id(H), H.shape)
     if key not in _EIG_CACHE:
         _EIG_CACHE.clear()
         Hd = H.toarray() if sp.issparse(H) else np.asarray(H)
-        _EIG_CACHE[key] = np.linalg.eigh(Hd) if vectors else (np.linalg.eigvalsh(Hd), None)
-        _EIG_CACHE[key] = (_EIG_CACHE[key], H)   # keep H alive so id() stays unique
+        _EIG_CACHE[key] = (np.linalg.eigh(Hd), H)   # keep H alive so its id() stays unique
     return _EIG_CACHE[key][0]
 
 
@@ -36,7 +37,7 @@ def _energy(w, beta):
 def thermal_exact(H, beta: float, ops: dict) -> dict:
     """Canonical averages Tr(e^{-beta H} O)/Z by full diagonalization (n <= 14).
     ops maps name -> sparse/dense matrix. Returns {'energy': ..., name: ...}."""
-    w, V = _eig(H, True)
+    w, V = _eig(H)
     p = _weights(w, beta)
     out = {"energy": float(p @ w)}
     for name, O in ops.items():
@@ -48,10 +49,7 @@ def thermal_exact(H, beta: float, ops: dict) -> dict:
 
 def beta_for_energy_exact(H, energy: float) -> float:
     """beta (may be negative) with <H>_beta = energy, by full diagonalization."""
-    if (id(H), H.shape, True) in _EIG_CACHE:
-        w = _eig(H, True)[0]
-    else:
-        w = _eig(H, False)[0]
+    w = _eig(H)[0]
     if not (w[0] < energy < w[-1]):
         raise ValueError("energy outside the spectrum")
     f = lambda b: _energy(w, b) - energy
