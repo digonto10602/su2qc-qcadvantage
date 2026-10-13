@@ -32,6 +32,20 @@ Emulate the first-order Trotter circuits of the 12-plaquette torus under realist
 - **Global echo rescaling fails.** It makes the error 2.7–3.8 times *larger*. The noisy $\langle H_E\rangle$ moves toward its decohered value much more slowly than $F$ decays. A single depolarizing error damages only a few local link energies; it does not scramble the whole state. Dividing by the global $F$ therefore overcorrects. Global-fidelity rescaling is not suitable for local observables such as link energies; observable-specific decay factors or ZNE should be used instead.
 - **Cost of one exact emulation.** At 10 steps (1140 two-qubit gates, $F\approx0.33$), raw noise biases $\langle H_E\rangle$ by about $0.26$, roughly 25% of the distance between the ideal value and the decohered value. Folding by 5 still leaves a signal that can be extrapolated.
 
+### Follow-up: is the echo excess caused by readout?
+$F_\text{echo}$ includes readout error, but $F_\text{pred}$ does not. Removing readout from the echo uses
+$$P=(1-r)^nF^2+\frac{1-F^2}{D}\;\Rightarrow\;F^2=\frac{P-1/D}{(1-r)^n-1/D},$$
+because readout leaves the returned string intact with probability $(1-r)^n$ and maps the uniform background onto itself. The resulting values are in `results/m4/echo_readout_corrected.json` (`scripts/echo_readout_m4.py`):
+
+| steps | $p_2$ | $F_\text{pred}$ | $F_\text{echo}$ | $F_\text{echo}$, readout removed |
+|---|---|---|---|---|
+| 2 | $7.9\times10^{-4}$ | 0.840 | 0.863 | 0.868 |
+| 4 | $1.0\times10^{-3}$ | 0.645 | 0.686 | 0.690 |
+| 6 | $1.5\times10^{-3}$ | 0.376 | 0.426 | 0.429 |
+| 10 | $1.0\times10^{-3}$ | 0.334 | 0.370 | 0.372 |
+
+Removing readout moves the echo slightly further above the prediction, to 3–14%. So the excess does not come from readout. It comes from gate errors that leave the returned bit string unchanged; for example, a $Z$-type error just before a measurement in the computational basis has no effect. $F_\text{pred}$ counts every Pauli error, so it is a lower bound on the echo fidelity.
+
 ## Problems / assumptions
 - Only the four required (steps, $p_2$) points were run. Each density-matrix configuration costs 6–45 minutes on 4 vCPUs (ZNE needs folds 1, 3, 5 plus the echo), and the full grid would have taken about 4.5 h. N = 16 was not run.
 - Exact (infinite-shot) values are used for mitigation. With hardware shot budgets, ZNE amplifies statistical noise by $\sqrt{(15/8)^2+(5/4)^2+(3/8)^2}\approx2.3$.

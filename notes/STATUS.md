@@ -21,7 +21,7 @@
 - Thread oversubscription (numba + OpenBLAS) slowed SVDs ~400x; MPS runs use OPENBLAS_NUM_THREADS=1.
 - N=24 thermal anchors: Chebyshev e^{-βH/2} instead of expm_multiply (METHODS §5), equal to 1e-9; 4-vector typicality error ≈ ±0.2 in <H_E>, ±0.04 in β.
 - M5 check uses dt=0.2 (reviewer choice; at dt≈0.7 chi=256 cannot reach 1-1e-6 at N=24).
-- Non-blocking audit items open: jackknife errors in typicality; noise.py reads a private Aer attribute; F_echo includes readout but F_pred does not; resource table uses e^{-p2 N} vs M4's 15p2/16; MPS observable sweep needs optimisation before N=96.
+- Post-M6 cleanups (all audit non-blocking items + code review, 10 findings) done: jackknife typicality errors (N=24 SU(2) vacuum anchor 5.15±0.27); public-API readout rate; readout-corrected echo (excess vs F_pred is not readout); resource table has both fidelity conventions; MPS observables on-device, resumable run_classical, batch set -e. See reports/audits/ and git log.
 
 ## Decisions waiting for Digonto
 1. Initial state for the physics comparison at N=48–64: PLAN prescribes stripe, but it is at β=0 (thermal = decohered) on even-L1 tori. Recommend the SU(2) vacuum (β≈1.4) or an odd-row state. Evidence: reports/m3_physics.md §3.
