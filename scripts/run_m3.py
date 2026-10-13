@@ -130,7 +130,10 @@ def part_n24(state, model, beta0):
         recur=hm.cheb_recur(lat, g, ab))
     rec["thermal"] = {"beta": beta, "electric_energy": th["electric_energy"],
                       "magnetic_energy": th["energy"] - th["electric_energy"],
-                      "method": "typicality, 4 vectors, seed 1234, Chebyshev exp(-beta H/2)",
+                      "electric_energy_err": th["errors"]["electric_energy"],
+                      "energy_err": th["errors"]["energy"],
+                      "method": "typicality, 4 vectors, seed 1234, Chebyshev exp(-beta H/2); "
+                                "errors: jackknife over vectors",
                       "search": [[b, r["energy"]] for b, r in hist]}
     log(f"thermal beta={beta:.4f} E={th['energy']:.5f} target={E0:.5f} "
         f"evals={len(hist)} ({time.time() - t0:.0f}s)")

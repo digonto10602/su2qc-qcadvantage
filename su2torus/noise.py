@@ -36,11 +36,26 @@ def noise_model(p2, p1=3e-5, readout=1e-3) -> NoiseModel:
 
 
 def _readout_rate(noise) -> float:
-    """Symmetric readout flip rate of a noise model built by noise_model (0 if none)."""
-    err = getattr(noise, "_default_readout_error", None)
-    if err is None:
+    """Symmetric readout flip rate of a noise model (0 if none), via Aer's public to_dict().
+    Only an all-qubit symmetric readout error (as built by noise_model) is supported."""
+    rates = [e["probabilities"] for e in noise.to_dict()["errors"] if e["type"] == "roerror"]
+    if not rates:
         return 0.0
-    return float(np.asarray(err.probabilities)[0, 1])
+    P = np.asarray(rates[0], dtype=float)
+    if len(rates) > 1 or abs(P[0, 1] - P[1, 0]) > 1e-15:
+        raise ValueError("only one symmetric all-qubit readout error is supported")
+    return float(P[0, 1])
+
+
+def echo_fidelity_readout_corrected(circ, initial, noise, shots=None, seed=None) -> float:
+    """As echo_fidelity, but with the return probability divided by (1-r)^n, the chance that
+    readout leaves the n measured bits unflipped. This makes the echo comparable with
+    predicted_fidelity, which excludes readout."""
+    D = 2 ** circ.num_qubits
+    r = _readout_rate(noise) if noise is not None else 0.0
+    P = run_noisy(echo_circuit(circ, initial), noise, shots, seed)[sum(1 << p for p in initial or [])]
+    P = P / (1 - r) ** circ.num_qubits
+    return float(np.sqrt(max(0.0, (P - 1 / D) / (1 - 1 / D))))
 
 
 def _apply_readout(probs, n, r):

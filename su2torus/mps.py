@@ -84,35 +84,48 @@ def _site_arrays(psi):
     return out
 
 
-def _transfer(X, A, O=None):
-    if O is None:
-        return np.einsum("ab,apc,bpd->cd", X, A, A.conj(), optimize=True)
-    return np.einsum("ab,apc,qp,bqd->cd", X, A, O, A.conj(), optimize=True)
+def _transfer(X, A, Ac):
+    """Left environment step: X'_{cd} = sum_{a,b,p} X_{ab} A_{apc} Ac_{bpd}  (Ac = conj of the
+    bra tensor). Explicit tensordots, no per-call path planning."""
+    return np.tensordot(np.tensordot(X, A, axes=(0, 0)), Ac, axes=([0, 1], [0, 1]))
 
 
 def _observables(lat, psi, site_of, g):
-    """(<H_E>, <Z_p> in plaquette order) of an MPS, by left/right environment sweeps."""
+    """(<H_E>, <Z_p> in plaquette order) of an MPS, by left/right environment sweeps.
+    Z is diagonal, so Z-insertions are site tensors with the phys index weighted by (1,-1).
+    Bonds are grouped by their left site so that each left environment is propagated once
+    to all of its partners (cost ~ sum over left sites of the longest bond, not over bonds)."""
     A = _site_arrays(psi)
+    Ac = [x.conj() for x in A]
+    zw = np.array([1.0, -1.0])[None, :, None]
+    AZ = [x * zw for x in A]
     n = len(A)
     L = [np.ones((1, 1), complex)]
     for k in range(n):
-        L.append(_transfer(L[-1], A[k]))
+        L.append(_transfer(L[-1], A[k], Ac[k]))
     R = [None] * (n + 1)
     R[n] = np.ones((1, 1), complex)
     for k in range(n - 1, -1, -1):
-        R[k] = np.einsum("apc,bpd,cd->ab", A[k], A[k].conj(), R[k + 1], optimize=True)
+        R[k] = np.tensordot(np.tensordot(A[k], R[k + 1], axes=(2, 0)), Ac[k],
+                            axes=([1, 2], [1, 2]))
     norm = np.real(L[n][0, 0])
-    zsite = np.array([np.real(np.sum(_transfer(L[k], A[k], _Z) * R[k + 1]))
-                      for k in range(n)])
-    zsite = zsite / norm
-    he = 0.0
+    zsite = np.array([np.real(np.sum(_transfer(L[k], AZ[k], Ac[k]) * R[k + 1]))
+                      for k in range(n)]) / norm
+    partners: dict = {}
     for p, q in lat.bonds:
         i, j = sorted((site_of[p], site_of[q]))
-        X = _transfer(L[i], A[i], _Z)
-        for k in range(i + 1, j):
-            X = _transfer(X, A[k])
-        zz = np.real(np.sum(_transfer(X, A[j], _Z) * R[j + 1])) / norm
-        he += 1.0 - zz
+        partners.setdefault(i, []).append(j)
+    zzsum = 0.0
+    for i, js in partners.items():
+        need = sorted(js)
+        X = _transfer(L[i], AZ[i], Ac[i])
+        k = i + 1
+        for j in need:
+            while k < j:
+                X = _transfer(X, A[k], Ac[k])
+                k += 1
+            zzsum += np.real(np.sum(_transfer(X, AZ[j], Ac[j]) * R[j + 1]))
+    he = len(lat.bonds) - zzsum / norm
     z = np.array([zsite[site_of[p]] for p in range(lat.n)])
     return 3.0 * g ** 2 / 16.0 * he, z
 

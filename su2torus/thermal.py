@@ -1,6 +1,8 @@
 """Thermal (late-time) anchors (docs/METHODS.md, section 5)."""
 from __future__ import annotations
 
+import warnings
+
 import numpy as np
 import scipy.sparse as sp
 from scipy.optimize import brentq
@@ -86,13 +88,16 @@ def thermal_typicality(apply_h, dim: int, beta: float, ops: dict, n_samples: int
                        seed: int = 0, bounds=None, recur=None) -> dict:
     """Quantum typicality: random vectors r, |r_b> = exp(-beta H/2)|r>,
     <O> ~ sum_r <r_b|O|r_b> / sum_r <r_b|r_b>.  Matrix-free: apply_h(psi) -> H psi;
-    ops maps name -> callable psi -> O psi. Returns {'energy': ..., name: ...}.
+    ops maps name -> callable psi -> O psi. Returns {'energy': ..., name: ...,
+    'errors': {'energy': ..., name: ...}} where 'errors' are jackknife (leave-one-vector-out)
+    statistical errors of the ratio estimates (0 for a single vector).
     exp(-beta H/2) by scipy expm_multiply on a LinearOperator (default), or, if spectral
     `bounds` are given, by a Chebyshev expansion (about 4x fewer H applications at n=24)."""
     A = LinearOperator((dim, dim), matvec=lambda v: -0.5 * beta * apply_h(v),
                        rmatvec=lambda v: -0.5 * beta * apply_h(v), dtype=complex)
-    num = {k: 0.0 for k in ["energy", *ops]}
-    den = 0.0
+    keys = ["energy", *ops]
+    nums = {k: [] for k in keys}
+    dens = []
     for r in _random_vectors(dim, n_samples, seed):
         if beta == 0:
             rb = r
@@ -100,11 +105,23 @@ def thermal_typicality(apply_h, dim: int, beta: float, ops: dict, n_samples: int
             rb = chebyshev_imag(recur or apply_h, r, 0.5 * beta, bounds)
         else:
             rb = expm_multiply(A, r, traceA=0.0)
-        den += np.vdot(rb, rb).real
-        num["energy"] += np.vdot(rb, apply_h(rb)).real
+        dens.append(np.vdot(rb, rb).real)
+        nums["energy"].append(np.vdot(rb, apply_h(rb)).real)
         for name, op in ops.items():
-            num[name] += np.vdot(rb, op(rb)).real
-    return {k: float(v / den) for k, v in num.items()}
+            nums[name].append(np.vdot(rb, op(rb)).real)
+    dens = np.array(dens)
+    out, errs = {}, {}
+    for k in keys:
+        x = np.array(nums[k])
+        out[k] = float(x.sum() / dens.sum())
+        m = len(x)
+        if m > 1:
+            loo = (x.sum() - x) / (dens.sum() - dens)          # leave-one-out estimates
+            errs[k] = float(np.sqrt((m - 1) / m * ((loo - loo.mean()) ** 2).sum()))
+        else:
+            errs[k] = 0.0
+    out["errors"] = errs
+    return out
 
 
 def beta_for_energy_typicality(apply_h, dim, energy, ops, beta0=0.0, step=0.1,
@@ -141,4 +158,8 @@ def beta_for_energy_typicality(apply_h, dim, energy, ops, beta0=0.0, step=0.1,
             fa *= 0.5            # Illinois modification
         b, fb = c, fc
     best = min(hist, key=lambda h: abs(h[1]["energy"] - energy))
+    if abs(best[1]["energy"] - energy) > rtol * max(1.0, abs(energy)):
+        warnings.warn(f"typicality beta search missed the {rtol:.0%} energy match: "
+                      f"best E={best[1]['energy']:.5g} vs target {energy:.5g} "
+                      f"after {len(hist)} evaluations", RuntimeWarning, stacklevel=2)
     return best[0], best[1], hist

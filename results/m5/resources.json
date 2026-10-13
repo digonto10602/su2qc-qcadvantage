@@ -60,7 +60,8 @@
    "gate_set": "native_zz",
    "n_2q": 1824,
    "p2": 0.00079,
-   "raw_fidelity": 0.23670041717517007
+   "raw_fidelity": 0.23670041717517007,
+   "raw_fidelity_depolarizing": 0.258877448185146
   },
   {
    "N": 48,
@@ -68,7 +69,8 @@
    "gate_set": "native_zz",
    "n_2q": 1824,
    "p2": 0.001,
-   "raw_fidelity": 0.16137894240960493
+   "raw_fidelity": 0.16137894240960493,
+   "raw_fidelity_depolarizing": 0.18072078486744417
   },
   {
    "N": 48,
@@ -76,7 +78,8 @@
    "gate_set": "native_zz",
    "n_2q": 1824,
    "p2": 0.0015,
-   "raw_fidelity": 0.06482914553295596
+   "raw_fidelity": 0.06482914553295596,
+   "raw_fidelity_depolarizing": 0.07678045156011107
   },
   {
    "N": 48,
@@ -84,7 +87,8 @@
    "gate_set": "cz",
    "n_2q": 2112,
    "p2": 0.00079,
-   "raw_fidelity": 0.18853341875175103
+   "raw_fidelity": 0.18853341875175103,
+   "raw_fidelity_depolarizing": 0.2091341161043361
   },
   {
    "N": 48,
@@ -92,7 +96,8 @@
    "gate_set": "cz",
    "n_2q": 2112,
    "p2": 0.001,
-   "raw_fidelity": 0.12099573281487792
+   "raw_fidelity": 0.12099573281487792,
+   "raw_fidelity_depolarizing": 0.13794107117621085
   },
   {
    "N": 48,
@@ -100,7 +105,8 @@
    "gate_set": "cz",
    "n_2q": 2112,
    "p2": 0.0015,
-   "raw_fidelity": 0.042087689162481054
+   "raw_fidelity": 0.042087689162481054,
+   "raw_fidelity_depolarizing": 0.05119618604187421
   },
   {
    "N": 48,
@@ -108,7 +114,8 @@
    "gate_set": "native_zz",
    "n_2q": 2280,
    "p2": 0.00079,
-   "raw_fidelity": 0.16510064852332834
+   "raw_fidelity": 0.16510064852332834,
+   "raw_fidelity_depolarizing": 0.1846578496042375
   },
   {
    "N": 48,
@@ -116,7 +123,8 @@
    "gate_set": "native_zz",
    "n_2q": 2280,
    "p2": 0.001,
-   "raw_fidelity": 0.10228420671553744
+   "raw_fidelity": 0.10228420671553744,
+   "raw_fidelity_depolarizing": 0.11783115373461286
   },
   {
    "N": 48,
@@ -124,7 +132,8 @@
    "gate_set": "native_zz",
    "n_2q": 2280,
    "p2": 0.0015,
-   "raw_fidelity": 0.03271243493901982
+   "raw_fidelity": 0.03271243493901982,
+   "raw_fidelity_depolarizing": 0.04041693049034346
   },
   {
    "N": 48,
@@ -132,7 +141,8 @@
    "gate_set": "cz",
    "n_2q": 2640,
    "p2": 0.00079,
-   "raw_fidelity": 0.12423255826448718
+   "raw_fidelity": 0.12423255826448718,
+   "raw_fidelity_depolarizing": 0.14142660186457237
   },
   {
    "N": 48,
@@ -140,7 +150,8 @@
    "gate_set": "cz",
    "n_2q": 2640,
    "p2": 0.001,
-   "raw_fidelity": 0.07136126955638605
+   "raw_fidelity": 0.07136126955638605,
+   "raw_fidelity_depolarizing": 0.08406534365785738
   },
   {
    "N": 48,
@@ -148,7 +159,8 @@
    "gate_set": "cz",
    "n_2q": 2640,
    "p2": 0.0015,
-   "raw_fidelity": 0.019063114291611637
+   "raw_fidelity": 0.019063114291611637,
+   "raw_fidelity_depolarizing": 0.024352693943302743
   },
   {
    "N": 48,
@@ -156,7 +168,8 @@
    "gate_set": "native_zz",
    "n_2q": 2736,
    "p2": 0.00079,
-   "raw_fidelity": 0.11515917237548068
+   "raw_fidelity": 0.11515917237548068,
+   "raw_fidelity_depolarizing": 0.13171684771890346
   },
   {
    "N": 48,
@@ -164,7 +177,8 @@
    "gate_set": "native_zz",
    "n_2q": 2736,
    "p2": 0.001,
-   "raw_fidelity": 0.06482914553295596
+   "raw_fidelity": 0.06482914553295596,
+   "raw_fidelity_depolarizing": 0.07682669594763987
   },
   {
    "N": 48,
@@ -172,7 +186,8 @@
    "gate_set": "native_zz",
    "n_2q": 2736,
    "p2": 0.0015,
-   "raw_fidelity": 0.016506517104958845
+   "raw_fidelity": 0.016506517104958845,
+   "raw_fidelity_depolarizing": 0.021275314706665573
   },
   {
    "N": 48,
@@ -180,7 +195,8 @@
    "gate_set": "cz",
    "n_2q": 3168,
    "p2": 0.00079,
-   "raw_fidelity": 0.08186203080134753
+   "raw_fidelity": 0.08186203080134753,
+   "raw_fidelity_depolarizing": 0.09563950677937982
   },
   {
    "N": 48,
@@ -188,7 +204,8 @@
    "gate_set": "cz",
    "n_2q": 3168,
    "p2": 0.001,
-   "raw_fidelity": 0.042087689162481054
+   "raw_fidelity": 0.042087689162481054,
+   "raw_fidelity_depolarizing": 0.05123189159004027
   },
   {
    "N": 48,
@@ -196,7 +213,8 @@
    "gate_set": "cz",
    "n_2q": 3168,
    "p2": 0.0015,
-   "raw_fidelity": 0.008634409104574973
+   "raw_fidelity": 0.008634409104574973,
+   "raw_fidelity_depolarizing": 0.011583943026754095
   },
   {
    "N": 48,
@@ -204,7 +222,8 @@
    "gate_set": "native_zz",
    "n_2q": 3192,
    "p2": 0.00079,
-   "raw_fidelity": 0.08032454809123199
+   "raw_fidelity": 0.08032454809123199,
+   "raw_fidelity_depolarizing": 0.09395391536394604
   },
   {
    "N": 48,
@@ -212,7 +231,8 @@
    "gate_set": "native_zz",
    "n_2q": 3192,
    "p2": 0.001,
-   "raw_fidelity": 0.04108960948606308
+   "raw_fidelity": 0.04108960948606308,
+   "raw_fidelity_depolarizing": 0.05009151674373612
   },
   {
    "N": 48,
@@ -220,7 +240,8 @@
    "gate_set": "native_zz",
    "n_2q": 3192,
    "p2": 0.0015,
-   "raw_fidelity": 0.008329098932690548
+   "raw_fidelity": 0.008329098932690548,
+   "raw_fidelity_depolarizing": 0.01119924275238582
   },
   {
    "N": 48,
@@ -228,7 +249,8 @@
    "gate_set": "cz",
    "n_2q": 3696,
    "p2": 0.00079,
-   "raw_fidelity": 0.053942317380712076
+   "raw_fidelity": 0.053942317380712076,
+   "raw_fidelity_depolarizing": 0.06467605907523655
   },
   {
    "N": 48,
@@ -236,7 +258,8 @@
    "gate_set": "cz",
    "n_2q": 3696,
    "p2": 0.001,
-   "raw_fidelity": 0.02482261862841405
+   "raw_fidelity": 0.02482261862841405,
+   "raw_fidelity_depolarizing": 0.031222220735527963
   },
   {
    "N": 48,
@@ -244,7 +267,8 @@
    "gate_set": "cz",
    "n_2q": 3696,
    "p2": 0.0015,
-   "raw_fidelity": 0.0039108521013260025
+   "raw_fidelity": 0.0039108521013260025,
+   "raw_fidelity_depolarizing": 0.005510180366882486
   },
   {
    "N": 48,
@@ -252,7 +276,8 @@
    "gate_set": "native_zz",
    "n_2q": 3648,
    "p2": 0.00079,
-   "raw_fidelity": 0.05602708749089955
+   "raw_fidelity": 0.05602708749089955,
+   "raw_fidelity_depolarizing": 0.06701753317885295
   },
   {
    "N": 48,
@@ -260,7 +285,8 @@
    "gate_set": "native_zz",
    "n_2q": 3648,
    "p2": 0.001,
-   "raw_fidelity": 0.02604316305324258
+   "raw_fidelity": 0.02604316305324258,
+   "raw_fidelity_depolarizing": 0.03266000208310504
   },
   {
    "N": 48,
@@ -268,7 +294,8 @@
    "gate_set": "native_zz",
    "n_2q": 3648,
    "p2": 0.0015,
-   "raw_fidelity": 0.004202818110533184
+   "raw_fidelity": 0.004202818110533184,
+   "raw_fidelity_depolarizing": 0.005895237741774563
   },
   {
    "N": 48,
@@ -276,7 +303,8 @@
    "gate_set": "cz",
    "n_2q": 4224,
    "p2": 0.00079,
-   "raw_fidelity": 0.035544849986223113
+   "raw_fidelity": 0.035544849986223113,
+   "raw_fidelity_depolarizing": 0.04373707851874194
   },
   {
    "N": 48,
@@ -284,7 +312,8 @@
    "gate_set": "cz",
    "n_2q": 4224,
    "p2": 0.001,
-   "raw_fidelity": 0.014639967359409327
+   "raw_fidelity": 0.014639967359409327,
+   "raw_fidelity_depolarizing": 0.01902773911724047
   },
   {
    "N": 48,
@@ -292,7 +321,8 @@
    "gate_set": "cz",
    "n_2q": 4224,
    "p2": 0.0015,
-   "raw_fidelity": 0.001771373579037625
+   "raw_fidelity": 0.001771373579037625,
+   "raw_fidelity_depolarizing": 0.002621049465234196
   },
   {
    "N": 48,
@@ -300,7 +330,8 @@
    "gate_set": "native_zz",
    "n_2q": 4104,
    "p2": 0.00079,
-   "raw_fidelity": 0.039079392381362946
+   "raw_fidelity": 0.039079392381362946,
+   "raw_fidelity_depolarizing": 0.04780375289290148
   },
   {
    "N": 48,
@@ -308,7 +339,8 @@
    "gate_set": "native_zz",
    "n_2q": 4104,
    "p2": 0.001,
-   "raw_fidelity": 0.016506517104958845
+   "raw_fidelity": 0.016506517104958845,
+   "raw_fidelity_depolarizing": 0.02129453858475571
   },
   {
    "N": 48,
@@ -316,7 +348,8 @@
    "gate_set": "native_zz",
    "n_2q": 4104,
    "p2": 0.0015,
-   "raw_fidelity": 0.0021207192053990702
+   "raw_fidelity": 0.0021207192053990702,
+   "raw_fidelity_depolarizing": 0.0031032301737221922
   },
   {
    "N": 48,
@@ -324,7 +357,8 @@
    "gate_set": "cz",
    "n_2q": 4752,
    "p2": 0.00079,
-   "raw_fidelity": 0.023421988929879865
+   "raw_fidelity": 0.023421988929879865,
+   "raw_fidelity_depolarizing": 0.029577127374587193
   },
   {
    "N": 48,
@@ -332,7 +366,8 @@
    "gate_set": "cz",
    "n_2q": 4752,
    "p2": 0.001,
-   "raw_fidelity": 0.008634409104574973
+   "raw_fidelity": 0.008634409104574973,
+   "raw_fidelity_depolarizing": 0.011596063552961132
   },
   {
    "N": 48,
@@ -340,7 +375,8 @@
    "gate_set": "cz",
    "n_2q": 4752,
    "p2": 0.0015,
-   "raw_fidelity": 0.0008023224287742007
+   "raw_fidelity": 0.0008023224287742007,
+   "raw_fidelity_depolarizing": 0.0012467650497421504
   },
   {
    "N": 48,
@@ -348,7 +384,8 @@
    "gate_set": "native_zz",
    "n_2q": 4560,
    "p2": 0.00079,
-   "raw_fidelity": 0.027258224142823598
+   "raw_fidelity": 0.027258224142823598,
+   "raw_fidelity_depolarizing": 0.0340985214204612
   },
   {
    "N": 48,
@@ -356,7 +393,8 @@
    "gate_set": "native_zz",
    "n_2q": 4560,
    "p2": 0.001,
-   "raw_fidelity": 0.010462058943426795
+   "raw_fidelity": 0.010462058943426795,
+   "raw_fidelity_depolarizing": 0.01388418079042997
   },
   {
    "N": 48,
@@ -364,7 +402,8 @@
    "gate_set": "native_zz",
    "n_2q": 4560,
    "p2": 0.0015,
-   "raw_fidelity": 0.0010701033996396044
+   "raw_fidelity": 0.0010701033996396044,
+   "raw_fidelity_depolarizing": 0.0016335282702612548
   },
   {
    "N": 48,
@@ -372,7 +411,8 @@
    "gate_set": "cz",
    "n_2q": 5280,
    "p2": 0.00079,
-   "raw_fidelity": 0.0154337285329392
+   "raw_fidelity": 0.0154337285329392,
+   "raw_fidelity_depolarizing": 0.02000148371496026
   },
   {
    "N": 48,
@@ -380,7 +420,8 @@
    "gate_set": "cz",
    "n_2q": 5280,
    "p2": 0.001,
-   "raw_fidelity": 0.00509243079269919
+   "raw_fidelity": 0.00509243079269919,
+   "raw_fidelity_depolarizing": 0.0070669820043136634
   },
   {
    "N": 48,
@@ -388,7 +429,8 @@
    "gate_set": "cz",
    "n_2q": 5280,
    "p2": 0.0015,
-   "raw_fidelity": 0.0003634023264950478
+   "raw_fidelity": 0.0003634023264950478,
+   "raw_fidelity_depolarizing": 0.0005930537022961741
   },
   {
    "N": 56,
@@ -396,7 +438,8 @@
    "gate_set": "native_zz",
    "n_2q": 2128,
    "p2": 0.00079,
-   "raw_fidelity": 0.1861653540363755
+   "raw_fidelity": 0.1861653540363755,
+   "raw_fidelity_depolarizing": 0.20666959520934514
   },
   {
    "N": 56,
@@ -404,7 +447,8 @@
    "gate_set": "native_zz",
    "n_2q": 2128,
    "p2": 0.001,
-   "raw_fidelity": 0.11907520627323114
+   "raw_fidelity": 0.11907520627323114,
+   "raw_fidelity_depolarizing": 0.13588644012484838
   },
   {
    "N": 56,
@@ -412,7 +456,8 @@
    "gate_set": "native_zz",
    "n_2q": 2128,
    "p2": 0.0015,
-   "raw_fidelity": 0.04108960948606308
+   "raw_fidelity": 0.04108960948606308,
+   "raw_fidelity_depolarizing": 0.050056341585583614
   },
   {
    "N": 56,
@@ -420,7 +465,8 @@
    "gate_set": "cz",
    "n_2q": 2464,
    "p2": 0.00079,
-   "raw_fidelity": 0.14276433716610093
+   "raw_fidelity": 0.14276433716610093,
+   "raw_fidelity_depolarizing": 0.1611247906323718
   },
   {
    "N": 56,
@@ -428,7 +474,8 @@
    "gate_set": "cz",
    "n_2q": 2464,
    "p2": 0.001,
-   "raw_fidelity": 0.08509389373266411
+   "raw_fidelity": 0.08509389373266411,
+   "raw_fidelity_depolarizing": 0.09915376125542286
   },
   {
    "N": 56,
@@ -436,7 +483,8 @@
    "gate_set": "cz",
    "n_2q": 2464,
    "p2": 0.0015,
-   "raw_fidelity": 0.02482261862841405
+   "raw_fidelity": 0.02482261862841405,
+   "raw_fidelity_depolarizing": 0.031196835531144294
   },
   {
    "N": 56,
@@ -444,7 +492,8 @@
    "gate_set": "native_zz",
    "n_2q": 2660,
    "p2": 0.00079,
-   "raw_fidelity": 0.12228510920474361
+   "raw_fidelity": 0.12228510920474361,
+   "raw_fidelity_depolarizing": 0.13934639448726258
   },
   {
    "N": 56,
@@ -452,7 +501,8 @@
    "gate_set": "native_zz",
    "n_2q": 2660,
    "p2": 0.001,
-   "raw_fidelity": 0.06994822174465536
+   "raw_fidelity": 0.06994822174465536,
+   "raw_fidelity_depolarizing": 0.0825030780684002
   },
   {
    "N": 56,
@@ -460,7 +510,8 @@
    "gate_set": "native_zz",
    "n_2q": 2660,
    "p2": 0.0015,
-   "raw_fidelity": 0.018499714119819242
+   "raw_fidelity": 0.018499714119819242,
+   "raw_fidelity_depolarizing": 0.023676847778226227
   },
   {
    "N": 56,
@@ -468,7 +519,8 @@
    "gate_set": "cz",
    "n_2q": 3080,
    "p2": 0.00079,
-   "raw_fidelity": 0.08775556498627766
+   "raw_fidelity": 0.08775556498627766,
+   "raw_fidelity_depolarizing": 0.10208289022860001
   },
   {
    "N": 56,
@@ -476,7 +528,8 @@
    "gate_set": "cz",
    "n_2q": 3080,
    "p2": 0.001,
-   "raw_fidelity": 0.045959256649044204
+   "raw_fidelity": 0.045959256649044204,
+   "raw_fidelity_depolarizing": 0.055639919308664104
   },
   {
    "N": 56,
@@ -484,7 +537,8 @@
    "gate_set": "cz",
    "n_2q": 3080,
    "p2": 0.0015,
-   "raw_fidelity": 0.009852796061187257
+   "raw_fidelity": 0.009852796061187257,
+   "raw_fidelity_depolarizing": 0.013111071300720367
   },
   {
    "N": 56,
@@ -492,7 +546,8 @@
    "gate_set": "native_zz",
    "n_2q": 3192,
    "p2": 0.00079,
-   "raw_fidelity": 0.08032454809123199
+   "raw_fidelity": 0.08032454809123199,
+   "raw_fidelity_depolarizing": 0.09395391536394604
   },
   {
    "N": 56,
@@ -500,7 +555,8 @@
    "gate_set": "native_zz",
    "n_2q": 3192,
    "p2": 0.001,
-   "raw_fidelity": 0.04108960948606308
+   "raw_fidelity": 0.04108960948606308,
+   "raw_fidelity_depolarizing": 0.05009151674373612
   },
   {
    "N": 56,
@@ -508,7 +564,8 @@
    "gate_set": "native_zz",
    "n_2q": 3192,
    "p2": 0.0015,
-   "raw_fidelity": 0.008329098932690548
+   "raw_fidelity": 0.008329098932690548,
+   "raw_fidelity_depolarizing": 0.01119924275238582
   },
   {
    "N": 56,
@@ -516,7 +573,8 @@
    "gate_set": "cz",
    "n_2q": 3696,
    "p2": 0.00079,
-   "raw_fidelity": 0.053942317380712076
+   "raw_fidelity": 0.053942317380712076,
+   "raw_fidelity_depolarizing": 0.06467605907523655
   },
   {
    "N": 56,
@@ -524,7 +582,8 @@
    "gate_set": "cz",
    "n_2q": 3696,
    "p2": 0.001,
-   "raw_fidelity": 0.02482261862841405
+   "raw_fidelity": 0.02482261862841405,
+   "raw_fidelity_depolarizing": 0.031222220735527963
   },
   {
    "N": 56,
@@ -532,7 +591,8 @@
    "gate_set": "cz",
    "n_2q": 3696,
    "p2": 0.0015,
-   "raw_fidelity": 0.0039108521013260025
+   "raw_fidelity": 0.0039108521013260025,
+   "raw_fidelity_depolarizing": 0.005510180366882486
   },
   {
    "N": 56,
@@ -540,7 +600,8 @@
    "gate_set": "native_zz",
    "n_2q": 3724,
    "p2": 0.00079,
-   "raw_fidelity": 0.052762213388205054
+   "raw_fidelity": 0.052762213388205054,
+   "raw_fidelity_depolarizing": 0.06334816372319148
   },
   {
    "N": 56,
@@ -548,7 +609,8 @@
    "gate_set": "native_zz",
    "n_2q": 3724,
    "p2": 0.001,
-   "raw_fidelity": 0.024137225587813747
+   "raw_fidelity": 0.024137225587813747,
+   "raw_fidelity_depolarizing": 0.03041292650448442
   },
   {
    "N": 56,
@@ -556,7 +618,8 @@
    "gate_set": "native_zz",
    "n_2q": 3724,
    "p2": 0.0015,
-   "raw_fidelity": 0.003749997896249905
+   "raw_fidelity": 0.003749997896249905,
+   "raw_fidelity_depolarizing": 0.005297286167553445
   },
   {
    "N": 56,
@@ -564,7 +627,8 @@
    "gate_set": "cz",
    "n_2q": 4312,
    "p2": 0.00079,
-   "raw_fidelity": 0.03315771033844376
+   "raw_fidelity": 0.03315771033844376,
+   "raw_fidelity_depolarizing": 0.040976432075309335
   },
   {
    "N": 56,
@@ -572,7 +636,8 @@
    "gate_set": "cz",
    "n_2q": 4312,
    "p2": 0.001,
-   "raw_fidelity": 0.013406709344253556
+   "raw_fidelity": 0.013406709344253556,
+   "raw_fidelity_depolarizing": 0.017520281836681865
   },
   {
    "N": 56,
@@ -580,7 +645,8 @@
    "gate_set": "cz",
    "n_2q": 4312,
    "p2": 0.0015,
-   "raw_fidelity": 0.0015523272849111436
+   "raw_fidelity": 0.0015523272849111436,
+   "raw_fidelity_depolarizing": 0.0023157594813712143
   },
   {
    "N": 56,
@@ -588,7 +654,8 @@
    "gate_set": "native_zz",
    "n_2q": 4256,
    "p2": 0.00079,
-   "raw_fidelity": 0.034657539043489026
+   "raw_fidelity": 0.034657539043489026,
+   "raw_fidelity_depolarizing": 0.04271232158399458
   },
   {
    "N": 56,
@@ -596,7 +663,8 @@
    "gate_set": "native_zz",
    "n_2q": 4256,
    "p2": 0.001,
-   "raw_fidelity": 0.014178904749012544
+   "raw_fidelity": 0.014178904749012544,
+   "raw_fidelity_depolarizing": 0.018465124609804002
   },
   {
    "N": 56,
@@ -604,7 +672,8 @@
    "gate_set": "native_zz",
    "n_2q": 4256,
    "p2": 0.0015,
-   "raw_fidelity": 0.001688356007717165
+   "raw_fidelity": 0.001688356007717165,
+   "raw_fidelity_depolarizing": 0.0025056373329326274
   },
   {
    "N": 56,
@@ -612,7 +681,8 @@
    "gate_set": "cz",
    "n_2q": 4928,
    "p2": 0.00079,
-   "raw_fidelity": 0.020381655966476144
+   "raw_fidelity": 0.020381655966476144,
+   "raw_fidelity_depolarizing": 0.025961198156325648
   },
   {
    "N": 56,
@@ -620,7 +690,8 @@
    "gate_set": "cz",
    "n_2q": 4928,
    "p2": 0.001,
-   "raw_fidelity": 0.007240970750585934
+   "raw_fidelity": 0.007240970750585934,
+   "raw_fidelity_depolarizing": 0.009831468371097395
   },
   {
    "N": 56,
@@ -628,7 +699,8 @@
    "gate_set": "cz",
    "n_2q": 4928,
    "p2": 0.0015,
-   "raw_fidelity": 0.0006161623955716883
+   "raw_fidelity": 0.0006161623955716883,
+   "raw_fidelity_depolarizing": 0.0009732425471572672
   },
   {
    "N": 56,
@@ -636,7 +708,8 @@
    "gate_set": "native_zz",
    "n_2q": 4788,
    "p2": 0.00079,
-   "raw_fidelity": 0.022765250648477935
+   "raw_fidelity": 0.022765250648477935,
+   "raw_fidelity_depolarizing": 0.02879866294256428
   },
   {
    "N": 56,
@@ -644,7 +717,8 @@
    "gate_set": "native_zz",
    "n_2q": 4788,
    "p2": 0.001,
-   "raw_fidelity": 0.008329098932690548
+   "raw_fidelity": 0.008329098932690548,
+   "raw_fidelity_depolarizing": 0.011211049578057354
   },
   {
    "N": 56,
@@ -652,7 +726,8 @@
    "gate_set": "native_zz",
    "n_2q": 4788,
    "p2": 0.0015,
-   "raw_fidelity": 0.0007601460287871798
+   "raw_fidelity": 0.0007601460287871798,
+   "raw_fidelity_depolarizing": 0.0011851763800567584
   },
   {
    "N": 56,
@@ -660,7 +735,8 @@
    "gate_set": "cz",
    "n_2q": 5544,
    "p2": 0.00079,
-   "raw_fidelity": 0.01252836506790263
+   "raw_fidelity": 0.01252836506790263,
+   "raw_fidelity_depolarizing": 0.01644808431523057
   },
   {
    "N": 56,
@@ -668,7 +744,8 @@
    "gate_set": "cz",
    "n_2q": 5544,
    "p2": 0.001,
-   "raw_fidelity": 0.0039108521013260025
+   "raw_fidelity": 0.0039108521013260025,
+   "raw_fidelity_depolarizing": 0.005516907275402274
   },
   {
    "N": 56,
@@ -676,7 +753,8 @@
    "gate_set": "cz",
    "n_2q": 5544,
    "p2": 0.0015,
-   "raw_fidelity": 0.00024457219905039127
+   "raw_fidelity": 0.00024457219905039127,
+   "raw_fidelity_depolarizing": 0.00040902393500567944
   },
   {
    "N": 56,
@@ -684,7 +762,8 @@
    "gate_set": "native_zz",
    "n_2q": 5320,
    "p2": 0.00079,
-   "raw_fidelity": 0.014953647933216073
+   "raw_fidelity": 0.014953647933216073,
+   "raw_fidelity_depolarizing": 0.0194174176565998
   },
   {
    "N": 56,
@@ -692,7 +771,8 @@
    "gate_set": "native_zz",
    "n_2q": 5320,
    "p2": 0.001,
-   "raw_fidelity": 0.004892753725239476
+   "raw_fidelity": 0.004892753725239476,
+   "raw_fidelity_depolarizing": 0.0068067578907605375
   },
   {
    "N": 56,
@@ -700,7 +780,8 @@
    "gate_set": "native_zz",
    "n_2q": 5320,
    "p2": 0.0015,
-   "raw_fidelity": 0.0003422394225150394
+   "raw_fidelity": 0.0003422394225150394,
+   "raw_fidelity_depolarizing": 0.0005605931207132962
   },
   {
    "N": 56,
@@ -708,7 +789,8 @@
    "gate_set": "cz",
    "n_2q": 6160,
    "p2": 0.00079,
-   "raw_fidelity": 0.007701039186060804
+   "raw_fidelity": 0.007701039186060804,
+   "raw_fidelity_depolarizing": 0.0104209164774244
   },
   {
    "N": 56,
@@ -716,7 +798,8 @@
    "gate_set": "cz",
    "n_2q": 6160,
    "p2": 0.001,
-   "raw_fidelity": 0.002112253271732714
+   "raw_fidelity": 0.002112253271732714,
+   "raw_fidelity_depolarizing": 0.003095800620674653
   },
   {
    "N": 56,
@@ -724,7 +807,8 @@
    "gate_set": "cz",
    "n_2q": 6160,
    "p2": 0.0015,
-   "raw_fidelity": 9.707759022334712e-05
+   "raw_fidelity": 9.707759022334712e-05,
+   "raw_fidelity_depolarizing": 0.00017190019065257327
   },
   {
    "N": 64,
@@ -732,7 +816,8 @@
    "gate_set": "native_zz",
    "n_2q": 2432,
    "p2": 0.00079,
-   "raw_fidelity": 0.1464194252680202
+   "raw_fidelity": 0.1464194252680202,
+   "raw_fidelity_depolarizing": 0.16499050760670061
   },
   {
    "N": 64,
@@ -740,7 +825,8 @@
    "gate_set": "native_zz",
    "n_2q": 2432,
    "p2": 0.001,
-   "raw_fidelity": 0.0878609348735492
+   "raw_fidelity": 0.0878609348735492,
+   "raw_fidelity_depolarizing": 0.1021748805669911
   },
   {
    "N": 64,
@@ -748,7 +834,8 @@
    "gate_set": "native_zz",
    "n_2q": 2432,
    "p2": 0.0015,
-   "raw_fidelity": 0.02604316305324258
+   "raw_fidelity": 0.02604316305324258,
+   "raw_fidelity_depolarizing": 0.03263379261283681
   },
   {
    "N": 64,
@@ -756,7 +843,8 @@
    "gate_set": "cz",
    "n_2q": 2816,
    "p2": 0.00079,
-   "raw_fidelity": 0.10810632990914695
+   "raw_fidelity": 0.10810632990914695,
+   "raw_fidelity_depolarizing": 0.12413660018709582
   },
   {
    "N": 64,
@@ -764,7 +852,8 @@
    "gate_set": "cz",
    "n_2q": 2816,
    "p2": 0.001,
-   "raw_fidelity": 0.059844843963749825
+   "raw_fidelity": 0.059844843963749825,
+   "raw_fidelity_depolarizing": 0.07127295944032744
   },
   {
    "N": 64,
@@ -772,7 +861,8 @@
    "gate_set": "cz",
    "n_2q": 2816,
    "p2": 0.0015,
-   "raw_fidelity": 0.014639967359409327
+   "raw_fidelity": 0.014639967359409327,
+   "raw_fidelity_depolarizing": 0.019010059584540846
   },
   {
    "N": 64,
@@ -780,7 +870,8 @@
    "gate_set": "native_zz",
    "n_2q": 3040,
    "p2": 0.00079,
-   "raw_fidelity": 0.09057292062122428
+   "raw_fidelity": 0.09057292062122428,
+   "raw_fidelity_depolarizing": 0.10515349170487802
   },
   {
    "N": 64,
@@ -788,7 +879,8 @@
    "gate_set": "native_zz",
    "n_2q": 3040,
    "p2": 0.001,
-   "raw_fidelity": 0.04783488949419837
+   "raw_fidelity": 0.04783488949419837,
+   "raw_fidelity_depolarizing": 0.057767047805465516
   },
   {
    "N": 64,
@@ -796,7 +888,8 @@
    "gate_set": "native_zz",
    "n_2q": 3040,
    "p2": 0.0015,
-   "raw_fidelity": 0.010462058943426795
+   "raw_fidelity": 0.010462058943426795,
+   "raw_fidelity_depolarizing": 0.013870254715341009
   },
   {
    "N": 64,
@@ -804,7 +897,8 @@
    "gate_set": "cz",
    "n_2q": 3520,
    "p2": 0.00079,
-   "raw_fidelity": 0.06198889641848588
+   "raw_fidelity": 0.06198889641848588,
+   "raw_fidelity_depolarizing": 0.07368427396285238
   },
   {
    "N": 64,
@@ -812,7 +906,8 @@
    "gate_set": "cz",
    "n_2q": 3520,
    "p2": 0.001,
-   "raw_fidelity": 0.029599435167892
+   "raw_fidelity": 0.029599435167892,
+   "raw_fidelity_depolarizing": 0.036826122227899744
   },
   {
    "N": 64,
@@ -820,7 +915,8 @@
    "gate_set": "cz",
    "n_2q": 3520,
    "p2": 0.0015,
-   "raw_fidelity": 0.00509243079269919
+   "raw_fidelity": 0.00509243079269919,
+   "raw_fidelity_depolarizing": 0.007058775142199317
   },
   {
    "N": 64,
@@ -828,7 +924,8 @@
    "gate_set": "native_zz",
    "n_2q": 3648,
    "p2": 0.00079,
-   "raw_fidelity": 0.05602708749089955
+   "raw_fidelity": 0.05602708749089955,
+   "raw_fidelity_depolarizing": 0.06701753317885295
   },
   {
    "N": 64,
@@ -836,7 +933,8 @@
    "gate_set": "native_zz",
    "n_2q": 3648,
    "p2": 0.001,
-   "raw_fidelity": 0.02604316305324258
+   "raw_fidelity": 0.02604316305324258,
+   "raw_fidelity_depolarizing": 0.03266000208310504
   },
   {
    "N": 64,
@@ -844,7 +942,8 @@
    "gate_set": "native_zz",
    "n_2q": 3648,
    "p2": 0.0015,
-   "raw_fidelity": 0.004202818110533184
+   "raw_fidelity": 0.004202818110533184,
+   "raw_fidelity_depolarizing": 0.005895237741774563
   },
   {
    "N": 64,
@@ -852,7 +951,8 @@
    "gate_set": "cz",
    "n_2q": 4224,
    "p2": 0.00079,
-   "raw_fidelity": 0.035544849986223113
+   "raw_fidelity": 0.035544849986223113,
+   "raw_fidelity_depolarizing": 0.04373707851874194
   },
   {
    "N": 64,
@@ -860,7 +960,8 @@
    "gate_set": "cz",
    "n_2q": 4224,
    "p2": 0.001,
-   "raw_fidelity": 0.014639967359409327
+   "raw_fidelity": 0.014639967359409327,
+   "raw_fidelity_depolarizing": 0.01902773911724047
   },
   {
    "N": 64,
@@ -868,7 +969,8 @@
    "gate_set": "cz",
    "n_2q": 4224,
    "p2": 0.0015,
-   "raw_fidelity": 0.001771373579037625
+   "raw_fidelity": 0.001771373579037625,
+   "raw_fidelity_depolarizing": 0.002621049465234196
   },
   {
    "N": 64,
@@ -876,7 +978,8 @@
    "gate_set": "native_zz",
    "n_2q": 4256,
    "p2": 0.00079,
-   "raw_fidelity": 0.034657539043489026
+   "raw_fidelity": 0.034657539043489026,
+   "raw_fidelity_depolarizing": 0.04271232158399458
   },
   {
    "N": 64,
@@ -884,7 +987,8 @@
    "gate_set": "native_zz",
    "n_2q": 4256,
    "p2": 0.001,
-   "raw_fidelity": 0.014178904749012544
+   "raw_fidelity": 0.014178904749012544,
+   "raw_fidelity_depolarizing": 0.018465124609804002
   },
   {
    "N": 64,
@@ -892,7 +996,8 @@
    "gate_set": "native_zz",
    "n_2q": 4256,
    "p2": 0.0015,
-   "raw_fidelity": 0.001688356007717165
+   "raw_fidelity": 0.001688356007717165,
+   "raw_fidelity_depolarizing": 0.0025056373329326274
   },
   {
    "N": 64,
@@ -900,7 +1005,8 @@
    "gate_set": "cz",
    "n_2q": 4928,
    "p2": 0.00079,
-   "raw_fidelity": 0.020381655966476144
+   "raw_fidelity": 0.020381655966476144,
+   "raw_fidelity_depolarizing": 0.025961198156325648
   },
   {
    "N": 64,
@@ -908,7 +1014,8 @@
    "gate_set": "cz",
    "n_2q": 4928,
    "p2": 0.001,
-   "raw_fidelity": 0.007240970750585934
+   "raw_fidelity": 0.007240970750585934,
+   "raw_fidelity_depolarizing": 0.009831468371097395
   },
   {
    "N": 64,
@@ -916,7 +1023,8 @@
    "gate_set": "cz",
    "n_2q": 4928,
    "p2": 0.0015,
-   "raw_fidelity": 0.0006161623955716883
+   "raw_fidelity": 0.0006161623955716883,
+   "raw_fidelity_depolarizing": 0.0009732425471572672
   },
   {
    "N": 64,
@@ -924,7 +1032,8 @@
    "gate_set": "native_zz",
    "n_2q": 4864,
    "p2": 0.00079,
-   "raw_fidelity": 0.02143864809581735
+   "raw_fidelity": 0.02143864809581735,
+   "raw_fidelity_depolarizing": 0.027221867600316738
   },
   {
    "N": 64,
@@ -932,7 +1041,8 @@
    "gate_set": "native_zz",
    "n_2q": 4864,
    "p2": 0.001,
-   "raw_fidelity": 0.007719543876854055
+   "raw_fidelity": 0.007719543876854055,
+   "raw_fidelity_depolarizing": 0.010439706218878896
   },
   {
    "N": 64,
@@ -940,7 +1050,8 @@
    "gate_set": "native_zz",
    "n_2q": 4864,
    "p2": 0.0015,
-   "raw_fidelity": 0.0006782463418177795
+   "raw_fidelity": 0.0006782463418177795,
+   "raw_fidelity_depolarizing": 0.0010649644202976427
   },
   {
    "N": 64,
@@ -948,7 +1059,8 @@
    "gate_set": "cz",
    "n_2q": 5632,
    "p2": 0.00079,
-   "raw_fidelity": 0.01168697856642532
+   "raw_fidelity": 0.01168697856642532,
+   "raw_fidelity_depolarizing": 0.015409895506010879
   },
   {
    "N": 64,
@@ -956,7 +1068,8 @@
    "gate_set": "cz",
    "n_2q": 5632,
    "p2": 0.001,
-   "raw_fidelity": 0.0035814053490455635
+   "raw_fidelity": 0.0035814053490455635,
+   "raw_fidelity_depolarizing": 0.00507983474738256
   },
   {
    "N": 64,
@@ -964,7 +1077,8 @@
    "gate_set": "cz",
    "n_2q": 5632,
    "p2": 0.0015,
-   "raw_fidelity": 0.00021432864428457053
+   "raw_fidelity": 0.00021432864428457053,
+   "raw_fidelity_depolarizing": 0.0003613823654077933
   },
   {
    "N": 64,
@@ -972,7 +1086,8 @@
    "gate_set": "native_zz",
    "n_2q": 5472,
    "p2": 0.00079,
-   "raw_fidelity": 0.01326163498220567
+   "raw_fidelity": 0.01326163498220567,
+   "raw_fidelity_depolarizing": 0.017349327973004806
   },
   {
    "N": 64,
@@ -980,7 +1095,8 @@
    "gate_set": "native_zz",
    "n_2q": 5472,
    "p2": 0.001,
-   "raw_fidelity": 0.004202818110533184
+   "raw_fidelity": 0.004202818110533184,
+   "raw_fidelity_depolarizing": 0.005902341210231104
   },
   {
    "N": 64,
@@ -988,7 +1104,8 @@
    "gate_set": "native_zz",
    "n_2q": 5472,
    "p2": 0.0015,
-   "raw_fidelity": 0.0002724651069362989
+   "raw_fidelity": 0.0002724651069362989,
+   "raw_fidelity_depolarizing": 0.00045263901586766044
   },
   {
    "N": 64,
@@ -996,7 +1113,8 @@
    "gate_set": "cz",
    "n_2q": 6336,
    "p2": 0.00079,
-   "raw_fidelity": 0.006701392086920772
+   "raw_fidelity": 0.006701392086920772,
+   "raw_fidelity_depolarizing": 0.00914691525700304
   },
   {
    "N": 64,
@@ -1004,7 +1122,8 @@
    "gate_set": "cz",
    "n_2q": 6336,
    "p2": 0.001,
-   "raw_fidelity": 0.001771373579037625
+   "raw_fidelity": 0.001771373579037625,
+   "raw_fidelity_depolarizing": 0.002624706715893639
   },
   {
    "N": 64,
@@ -1012,7 +1131,8 @@
    "gate_set": "cz",
    "n_2q": 6336,
    "p2": 0.0015,
-   "raw_fidelity": 7.455302058516719e-05
+   "raw_fidelity": 7.455302058516719e-05,
+   "raw_fidelity_depolarizing": 0.00013418773604708482
   },
   {
    "N": 64,
@@ -1020,7 +1140,8 @@
    "gate_set": "native_zz",
    "n_2q": 6080,
    "p2": 0.00079,
-   "raw_fidelity": 0.008203453949858594
+   "raw_fidelity": 0.008203453949858594,
+   "raw_fidelity_depolarizing": 0.011057256817727849
   },
   {
    "N": 64,
@@ -1028,7 +1149,8 @@
    "gate_set": "native_zz",
    "n_2q": 6080,
    "p2": 0.001,
-   "raw_fidelity": 0.0022881766529221693
+   "raw_fidelity": 0.0022881766529221693,
+   "raw_fidelity_depolarizing": 0.003337031812158938
   },
   {
    "N": 64,
@@ -1036,7 +1158,8 @@
    "gate_set": "native_zz",
    "n_2q": 6080,
    "p2": 0.0015,
-   "raw_fidelity": 0.00010945467733573657
+   "raw_fidelity": 0.00010945467733573657,
+   "raw_fidelity_depolarizing": 0.00019238396586843953
   },
   {
    "N": 64,
@@ -1044,7 +1167,8 @@
    "gate_set": "cz",
    "n_2q": 7040,
    "p2": 0.00079,
-   "raw_fidelity": 0.0038426232791817713
+   "raw_fidelity": 0.0038426232791817713,
+   "raw_fidelity_depolarizing": 0.005429372229432685
   },
   {
    "N": 64,
@@ -1052,7 +1176,8 @@
    "gate_set": "cz",
    "n_2q": 7040,
    "p2": 0.001,
-   "raw_fidelity": 0.0008761265622582417
+   "raw_fidelity": 0.0008761265622582417,
+   "raw_fidelity_depolarizing": 0.0013561632783442117
   },
   {
    "N": 64,
@@ -1060,7 +1185,8 @@
    "gate_set": "cz",
    "n_2q": 7040,
    "p2": 0.0015,
-   "raw_fidelity": 2.593285137843091e-05
+   "raw_fidelity": 2.593285137843091e-05,
+   "raw_fidelity_depolarizing": 4.982630650813099e-05
   },
   {
    "N": 96,
@@ -1068,7 +1194,8 @@
    "gate_set": "native_zz",
    "n_2q": 3648,
    "p2": 0.00079,
-   "raw_fidelity": 0.05602708749089955
+   "raw_fidelity": 0.05602708749089955,
+   "raw_fidelity_depolarizing": 0.06701753317885295
   },
   {
    "N": 96,
@@ -1076,7 +1203,8 @@
    "gate_set": "native_zz",
    "n_2q": 3648,
    "p2": 0.001,
-   "raw_fidelity": 0.02604316305324258
+   "raw_fidelity": 0.02604316305324258,
+   "raw_fidelity_depolarizing": 0.03266000208310504
   },
   {
    "N": 96,
@@ -1084,7 +1212,8 @@
    "gate_set": "native_zz",
    "n_2q": 3648,
    "p2": 0.0015,
-   "raw_fidelity": 0.004202818110533184
+   "raw_fidelity": 0.004202818110533184,
+   "raw_fidelity_depolarizing": 0.005895237741774563
   },
   {
    "N": 96,
@@ -1092,7 +1221,8 @@
    "gate_set": "cz",
    "n_2q": 4224,
    "p2": 0.00079,
-   "raw_fidelity": 0.035544849986223113
+   "raw_fidelity": 0.035544849986223113,
+   "raw_fidelity_depolarizing": 0.04373707851874194
   },
   {
    "N": 96,
@@ -1100,7 +1230,8 @@
    "gate_set": "cz",
    "n_2q": 4224,
    "p2": 0.001,
-   "raw_fidelity": 0.014639967359409327
+   "raw_fidelity": 0.014639967359409327,
+   "raw_fidelity_depolarizing": 0.01902773911724047
   },
   {
    "N": 96,
@@ -1108,7 +1239,8 @@
    "gate_set": "cz",
    "n_2q": 4224,
    "p2": 0.0015,
-   "raw_fidelity": 0.001771373579037625
+   "raw_fidelity": 0.001771373579037625,
+   "raw_fidelity_depolarizing": 0.002621049465234196
   },
   {
    "N": 96,
@@ -1116,7 +1248,8 @@
    "gate_set": "native_zz",
    "n_2q": 4560,
    "p2": 0.00079,
-   "raw_fidelity": 0.027258224142823598
+   "raw_fidelity": 0.027258224142823598,
+   "raw_fidelity_depolarizing": 0.0340985214204612
   },
   {
    "N": 96,
@@ -1124,7 +1257,8 @@
    "gate_set": "native_zz",
    "n_2q": 4560,
    "p2": 0.001,
-   "raw_fidelity": 0.010462058943426795
+   "raw_fidelity": 0.010462058943426795,
+   "raw_fidelity_depolarizing": 0.01388418079042997
   },
   {
    "N": 96,
@@ -1132,7 +1266,8 @@
    "gate_set": "native_zz",
    "n_2q": 4560,
    "p2": 0.0015,
-   "raw_fidelity": 0.0010701033996396044
+   "raw_fidelity": 0.0010701033996396044,
+   "raw_fidelity_depolarizing": 0.0016335282702612548
   },
   {
    "N": 96,
@@ -1140,7 +1275,8 @@
    "gate_set": "cz",
    "n_2q": 5280,
    "p2": 0.00079,
-   "raw_fidelity": 0.0154337285329392
+   "raw_fidelity": 0.0154337285329392,
+   "raw_fidelity_depolarizing": 0.02000148371496026
   },
   {
    "N": 96,
@@ -1148,7 +1284,8 @@
    "gate_set": "cz",
    "n_2q": 5280,
    "p2": 0.001,
-   "raw_fidelity": 0.00509243079269919
+   "raw_fidelity": 0.00509243079269919,
+   "raw_fidelity_depolarizing": 0.0070669820043136634
   },
   {
    "N": 96,
@@ -1156,7 +1293,8 @@
    "gate_set": "cz",
    "n_2q": 5280,
    "p2": 0.0015,
-   "raw_fidelity": 0.0003634023264950478
+   "raw_fidelity": 0.0003634023264950478,
+   "raw_fidelity_depolarizing": 0.0005930537022961741
   },
   {
    "N": 96,
@@ -1164,7 +1302,8 @@
    "gate_set": "native_zz",
    "n_2q": 5472,
    "p2": 0.00079,
-   "raw_fidelity": 0.01326163498220567
+   "raw_fidelity": 0.01326163498220567,
+   "raw_fidelity_depolarizing": 0.017349327973004806
   },
   {
    "N": 96,
@@ -1172,7 +1311,8 @@
    "gate_set": "native_zz",
    "n_2q": 5472,
    "p2": 0.001,
-   "raw_fidelity": 0.004202818110533184
+   "raw_fidelity": 0.004202818110533184,
+   "raw_fidelity_depolarizing": 0.005902341210231104
   },
   {
    "N": 96,
@@ -1180,7 +1320,8 @@
    "gate_set": "native_zz",
    "n_2q": 5472,
    "p2": 0.0015,
-   "raw_fidelity": 0.0002724651069362989
+   "raw_fidelity": 0.0002724651069362989,
+   "raw_fidelity_depolarizing": 0.00045263901586766044
   },
   {
    "N": 96,
@@ -1188,7 +1329,8 @@
    "gate_set": "cz",
    "n_2q": 6336,
    "p2": 0.00079,
-   "raw_fidelity": 0.006701392086920772
+   "raw_fidelity": 0.006701392086920772,
+   "raw_fidelity_depolarizing": 0.00914691525700304
   },
   {
    "N": 96,
@@ -1196,7 +1338,8 @@
    "gate_set": "cz",
    "n_2q": 6336,
    "p2": 0.001,
-   "raw_fidelity": 0.001771373579037625
+   "raw_fidelity": 0.001771373579037625,
+   "raw_fidelity_depolarizing": 0.002624706715893639
   },
   {
    "N": 96,
@@ -1204,7 +1347,8 @@
    "gate_set": "cz",
    "n_2q": 6336,
    "p2": 0.0015,
-   "raw_fidelity": 7.455302058516719e-05
+   "raw_fidelity": 7.455302058516719e-05,
+   "raw_fidelity_depolarizing": 0.00013418773604708482
   },
   {
    "N": 96,
@@ -1212,7 +1356,8 @@
    "gate_set": "native_zz",
    "n_2q": 6384,
    "p2": 0.00079,
-   "raw_fidelity": 0.006452033026060641
+   "raw_fidelity": 0.006452033026060641,
+   "raw_fidelity_depolarizing": 0.008827338212215536
   },
   {
    "N": 96,
@@ -1220,7 +1365,8 @@
    "gate_set": "native_zz",
    "n_2q": 6384,
    "p2": 0.001,
-   "raw_fidelity": 0.001688356007717165
+   "raw_fidelity": 0.001688356007717165,
+   "raw_fidelity_depolarizing": 0.0025091600496879953
   },
   {
    "N": 96,
@@ -1228,7 +1374,8 @@
    "gate_set": "native_zz",
    "n_2q": 6384,
    "p2": 0.0015,
-   "raw_fidelity": 6.937388903054681e-05
+   "raw_fidelity": 6.937388903054681e-05,
+   "raw_fidelity_depolarizing": 0.0001254230382268663
   },
   {
    "N": 96,
@@ -1236,7 +1383,8 @@
    "gate_set": "cz",
    "n_2q": 7392,
    "p2": 0.00079,
-   "raw_fidelity": 0.0029097736044014725
+   "raw_fidelity": 0.0029097736044014725,
+   "raw_fidelity_depolarizing": 0.0041829926175034875
   },
   {
    "N": 96,
@@ -1244,7 +1392,8 @@
    "gate_set": "cz",
    "n_2q": 7392,
    "p2": 0.001,
-   "raw_fidelity": 0.0006161623955716883
+   "raw_fidelity": 0.0006161623955716883,
+   "raw_fidelity_depolarizing": 0.0009748270676580322
   },
   {
    "N": 96,
@@ -1252,7 +1401,8 @@
    "gate_set": "cz",
    "n_2q": 7392,
    "p2": 0.0015,
-   "raw_fidelity": 1.529476415844601e-05
+   "raw_fidelity": 1.529476415844601e-05,
+   "raw_fidelity_depolarizing": 3.0362087675577212e-05
   },
   {
    "N": 96,
@@ -1260,7 +1410,8 @@
    "gate_set": "native_zz",
    "n_2q": 7296,
    "p2": 0.00079,
-   "raw_fidelity": 0.003139034532712913
+   "raw_fidelity": 0.003139034532712913,
+   "raw_fidelity_depolarizing": 0.004491349753378656
   },
   {
    "N": 96,
@@ -1268,7 +1419,8 @@
    "gate_set": "native_zz",
    "n_2q": 7296,
    "p2": 0.001,
-   "raw_fidelity": 0.0006782463418177795
+   "raw_fidelity": 0.0006782463418177795,
+   "raw_fidelity_depolarizing": 0.0010666757360684254
   },
   {
    "N": 96,
@@ -1276,7 +1428,8 @@
    "gate_set": "native_zz",
    "n_2q": 7296,
    "p2": 0.0015,
-   "raw_fidelity": 1.7663680070225723e-05
+   "raw_fidelity": 1.7663680070225723e-05,
+   "raw_fidelity_depolarizing": 3.475382803204325e-05
   },
   {
    "N": 96,
@@ -1284,7 +1437,8 @@
    "gate_set": "cz",
    "n_2q": 8448,
    "p2": 0.00079,
-   "raw_fidelity": 0.001263436360543105
+   "raw_fidelity": 0.001263436360543105,
+   "raw_fidelity_depolarizing": 0.0019129320373545973
   },
   {
    "N": 96,
@@ -1292,7 +1446,8 @@
    "gate_set": "cz",
    "n_2q": 8448,
    "p2": 0.001,
-   "raw_fidelity": 0.00021432864428457053
+   "raw_fidelity": 0.00021432864428457053,
+   "raw_fidelity_depolarizing": 0.0003620548559137631
   },
   {
    "N": 96,
@@ -1300,7 +1455,8 @@
    "gate_set": "cz",
    "n_2q": 8448,
    "p2": 0.0015,
-   "raw_fidelity": 3.1377643565125648e-06
+   "raw_fidelity": 3.1377643565125648e-06,
+   "raw_fidelity_depolarizing": 6.869900299204464e-06
   },
   {
    "N": 96,
@@ -1308,7 +1464,8 @@
    "gate_set": "native_zz",
    "n_2q": 8208,
    "p2": 0.00079,
-   "raw_fidelity": 0.0015271989088965281
+   "raw_fidelity": 0.0015271989088965281,
+   "raw_fidelity_depolarizing": 0.0022851987906455863
   },
   {
    "N": 96,
@@ -1316,7 +1473,8 @@
    "gate_set": "native_zz",
    "n_2q": 8208,
    "p2": 0.001,
-   "raw_fidelity": 0.0002724651069362989
+   "raw_fidelity": 0.0002724651069362989,
+   "raw_fidelity_depolarizing": 0.00045345737353764975
   },
   {
    "N": 96,
@@ -1324,7 +1482,8 @@
    "gate_set": "native_zz",
    "n_2q": 8208,
    "p2": 0.0015,
-   "raw_fidelity": 4.497449948148463e-06
+   "raw_fidelity": 4.497449948148463e-06,
+   "raw_fidelity_depolarizing": 9.630037511099867e-06
   },
   {
    "N": 96,
@@ -1332,7 +1491,8 @@
    "gate_set": "cz",
    "n_2q": 9504,
    "p2": 0.00079,
-   "raw_fidelity": 0.0005485895654314148
+   "raw_fidelity": 0.0005485895654314148,
+   "raw_fidelity_depolarizing": 0.0008748064637325551
   },
   {
    "N": 96,
@@ -1340,7 +1500,8 @@
    "gate_set": "cz",
    "n_2q": 9504,
    "p2": 0.001,
-   "raw_fidelity": 7.455302058516719e-05
+   "raw_fidelity": 7.455302058516719e-05,
+   "raw_fidelity_depolarizing": 0.00013446868992431354
   },
   {
    "N": 96,
@@ -1348,7 +1509,8 @@
    "gate_set": "cz",
    "n_2q": 9504,
    "p2": 0.0015,
-   "raw_fidelity": 6.437212797141324e-07
+   "raw_fidelity": 6.437212797141324e-07,
+   "raw_fidelity_depolarizing": 1.5544230892585472e-06
   },
   {
    "N": 96,
@@ -1356,7 +1518,8 @@
    "gate_set": "native_zz",
    "n_2q": 9120,
    "p2": 0.00079,
-   "raw_fidelity": 0.0007430107834204112
+   "raw_fidelity": 0.0007430107834204112,
+   "raw_fidelity_depolarizing": 0.0011627091630616513
   },
   {
    "N": 96,
@@ -1364,7 +1527,8 @@
    "gate_set": "native_zz",
    "n_2q": 9120,
    "p2": 0.001,
-   "raw_fidelity": 0.00010945467733573657
+   "raw_fidelity": 0.00010945467733573657,
+   "raw_fidelity_depolarizing": 0.00019277047622134457
   },
   {
    "N": 96,
@@ -1372,7 +1536,8 @@
    "gate_set": "native_zz",
    "n_2q": 9120,
    "p2": 0.0015,
-   "raw_fidelity": 1.145121285920239e-06
+   "raw_fidelity": 1.145121285920239e-06,
+   "raw_fidelity_depolarizing": 2.668414609742727e-06
   },
   {
    "N": 96,
@@ -1380,7 +1545,8 @@
    "gate_set": "cz",
    "n_2q": 10560,
    "p2": 0.00079,
-   "raw_fidelity": 0.00023819997642846158
+   "raw_fidelity": 0.00023819997642846158,
+   "raw_fidelity_depolarizing": 0.00040005935079982053
   },
   {
    "N": 96,
@@ -1388,7 +1554,8 @@
    "gate_set": "cz",
    "n_2q": 10560,
    "p2": 0.001,
-   "raw_fidelity": 2.593285137843091e-05
+   "raw_fidelity": 2.593285137843091e-05,
+   "raw_fidelity_depolarizing": 4.9942234649293164e-05
   },
   {
    "N": 96,
@@ -1396,7 +1563,12 @@
    "gate_set": "cz",
    "n_2q": 10560,
    "p2": 0.0015,
-   "raw_fidelity": 1.3206125090201331e-07
+   "raw_fidelity": 1.3206125090201331e-07,
+   "raw_fidelity_depolarizing": 3.5171269380719904e-07
   }
- ]
+ ],
+ "fidelity_conventions": {
+  "raw_fidelity": "exp(-p2 * n_2q): p2 read as the error probability per gate",
+  "raw_fidelity_depolarizing": "(1 - 15 p2/16)^n_2q: p2 read as the Aer two-qubit depolarizing parameter (as in M4); 2q gates only"
+ }
 }

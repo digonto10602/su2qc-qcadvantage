@@ -31,9 +31,15 @@ def main():
                 for p in P2:
                     n2 = per[gs] * s
                     rows.append({"N": N, "steps": s, "gate_set": gs, "n_2q": n2, "p2": p,
-                                 "raw_fidelity": math.exp(-p * n2)})
+                                 "raw_fidelity": math.exp(-p * n2),
+                                 # M4 convention: Aer depolarizing p -> error prob 15p/16
+                                 "raw_fidelity_depolarizing": (1 - 15 * p / 16) ** n2})
     out = {"order": 1, "model": "su2", "p2_values": P2, "steps": STEPS, "tori": tori,
-           "rows": rows}
+           "rows": rows,
+           "fidelity_conventions": {
+               "raw_fidelity": "exp(-p2 * n_2q): p2 read as the error probability per gate",
+               "raw_fidelity_depolarizing": "(1 - 15 p2/16)^n_2q: p2 read as the Aer two-qubit "
+                                            "depolarizing parameter (as in M4); 2q gates only"}}
     path = pathlib.Path(args.out)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(out, indent=1))

@@ -15,3 +15,15 @@ def test_fast_kernels_match_numpy(monkeypatch):
             ob.hexagon_x_string(lat, psi, lat.hexagons()[0]))
     for a, b in zip(fast, slow):
         assert np.allclose(a, b, atol=1e-12)
+
+
+def test_mps_observables_match_dense_with_truncation():
+    """Grouped environment sweep == dense expectation values of the same (truncated) MPS."""
+    from su2torus.lattice import initial_state
+    from su2torus import mps
+    lat = HoneycombTorus(3, 2)
+    for chi in (6, 64):
+        res = mps.simulate_mps(lat, 1.25, 0.4, 2, initial=initial_state(lat, "stripe"), chi=chi)
+        psi = mps.mps_statevector(res)
+        assert np.allclose(res["z"][-1], ob.z_expectations(lat, psi), atol=1e-12)
+        assert abs(res["electric_energy"][-1] - ob.electric_energy(lat, 1.25, psi)) < 1e-11
