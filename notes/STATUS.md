@@ -2,8 +2,8 @@
 
 ## Position
 - Milestone: ALL DONE (M1–M6). Tagged v0.1-pre-cluster. STOPPED per CLAUDE.md (no cluster work).
-- Locked acceptance milestones: m1–m6 (full suite: 167 passed)
-- Tags (local only, see Notes): m1-done … m6-done, v0.1-pre-cluster
+- Locked acceptance milestones: m1–m6 (full suite: 171 passed after post-M6 fixes; merged to main in PR #1)
+- Tags on GitHub: m1-done … m6-done, v0.1-pre-cluster (pushed from laptop via scripts/push_tags.sh); v0.1.1 = main after post-M6 fixes (b856dd3; push pending)
 
 ## Attempt log (failing acceptance test -> attempts)
 - (none; no test needed escalation)
@@ -17,7 +17,7 @@
 - M6: N=48 stripe chi 32–256 (chi=256: 6935 s, under the 2 h cap). Converged through step 2, marginal at 3, unconverged from 4; chi=256 cumulative error 0.79 at step 8. Audit PASS after text fixes. Summary: 21 verified numbers.
 
 ## Notes
-- Git tags do not reach the remote (proxy accepts branch pushes only). Tags exist locally.
+- Cloud git proxy accepts branch pushes only: tags are pushed from a laptop with scripts/push_tags.sh.
 - Thread oversubscription (numba + OpenBLAS) slowed SVDs ~400x; MPS runs use OPENBLAS_NUM_THREADS=1.
 - N=24 thermal anchors: Chebyshev e^{-βH/2} instead of expm_multiply (METHODS §5), equal to 1e-9; 4-vector typicality error ≈ ±0.2 in <H_E>, ±0.04 in β.
 - M5 check uses dt=0.2 (reviewer choice; at dt≈0.7 chi=256 cannot reach 1-1e-6 at N=24).
@@ -27,4 +27,4 @@
 1. Initial state for the physics comparison at N=48–64: PLAN prescribes stripe, but it is at β=0 (thermal = decohered) on even-L1 tori. Recommend the SU(2) vacuum (β≈1.4) or an odd-row state. Evidence: reports/m3_physics.md §3.
 2. Open-lattice H_E form (audit N1): code uses the bond form; METHODS' 3n_p form differs on open lattices (string E_E(0)=4.41 vs 5.88). Evidence: reports/audits/m1_audit.md.
 3. Trotter step 2δt/g²=0.9 (PLAN M6) departs strongly from e^{-iHt} (audit: N=12/16 Trotter <H_E> 0.54 vs exact 0.31 of E_inf at step 8). Decide δt before cluster QMC thermal-anchor work. Evidence: reports/audits/m6_audit.md.
-4. Tags: run `bash scripts/push_tags.sh` from a clone with tag-push rights (recreates them at the recorded commits).
+4. ~~Tags~~ DONE: milestone tags pushed to GitHub (verified with git ls-remote). Only v0.1.1 remains: re-run `bash scripts/push_tags.sh` once this change is on main.
