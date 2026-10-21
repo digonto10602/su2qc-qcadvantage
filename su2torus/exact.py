@@ -1,18 +1,96 @@
 """Exact (state-vector) tools."""
 from __future__ import annotations
 
+import numpy as np
+import scipy.sparse as sp
+from scipy.sparse.linalg import LinearOperator, eigsh, expm_multiply
+from scipy.special import jv
+
 
 def product_state(lat, excited):
     """Complex128 basis vector with the listed plaquettes excited."""
-    raise NotImplementedError
+    v = np.zeros(2 ** lat.n, dtype=np.complex128)
+    v[sum(1 << int(p) for p in set(excited))] = 1.0
+    return v
 
 
 def ground_state(H):
     """(E0, psi0) of a sparse Hermitian matrix (Lanczos)."""
-    raise NotImplementedError
+    w, V = eigsh(H, k=1, which="SA", tol=1e-12)
+    return float(w[0]), V[:, 0]
 
 
-def evolve(H, psi0, times):
+def spectral_bounds(H, pad: float = 0.05):
+    """Padded [Emin, Emax] from Lanczos (for Chebyshev propagation)."""
+    lo = eigsh(H, k=1, which="SA", tol=1e-6, return_eigenvectors=False)[0]
+    hi = eigsh(H, k=1, which="LA", tol=1e-6, return_eigenvectors=False)[0]
+    w = hi - lo
+    return float(lo - pad * w - 1e-3), float(hi + pad * w + 1e-3)
+
+
+def cheb_series(op, v, coef, c, r, tol=1e-15):
+    """sum_k coef[k] T_k((H - c)/r) v, stopping once two consecutive |coef| < tol*|coef[0]|
+    beyond the peak. `op` is either a matvec callable or a fused recurrence
+    f(t1, t0, c, r, scale) (see hamiltonian.cheb_recur), selected by attribute `fused`."""
+    from .hamiltonian import axpy
+    if getattr(op, "fused", False):
+        recur = op
+    else:
+        def recur(t1, t0, c_, r_, scale):
+            t0 *= -1
+            t0 += scale * (op(t1) - c_ * t1) / r_
+    t0 = np.array(v, dtype=np.complex128)
+    out = coef[0] * t0
+    t1 = np.zeros_like(t0)
+    recur(t0, t1, c, r, 1.0)                      # t1 = Ht t0
+    axpy(coef[1], t1, out)
+    peak = int(np.argmax(np.abs(coef)))
+    thr = tol * np.abs(coef).max()
+    for k in range(2, len(coef)):
+        recur(t1, t0, c, r, 2.0)                  # t0 <- 2 Ht t1 - t0  (= T_k)
+        t0, t1 = t1, t0
+        axpy(coef[k], t1, out)
+        if k > peak and abs(coef[k]) < thr and abs(coef[k - 1]) < thr:
+            break
+    return out
+
+
+def chebyshev_step(matvec, psi, t, bounds, tol=1e-15):
+    """exp(-i H t) psi by Chebyshev expansion; the spectrum of H must lie inside `bounds`.
+    `matvec` may be a fused recurrence (hamiltonian.cheb_recur, attribute fused=True)."""
+    lo, hi = bounds
+    c, r = 0.5 * (hi + lo), 0.5 * (hi - lo)
+    x = r * abs(t)
+    kmax = int(x + 10 * x ** (1 / 3) + 40)
+    s = -1j if t >= 0 else 1j
+    k = np.arange(kmax + 1)
+    coef = jv(k, x) * s ** k * np.where(k == 0, 1.0, 2.0)
+    return np.exp(-1j * c * t) * cheb_series(matvec, psi, coef, c, r, tol)
+
+
+def evolve_iter(H, psi0, times, bounds=None):
+    """Generator of exp(-i H t) psi0 for t in `times` (one state alive at a time)."""
+    times = np.asarray(times, dtype=float)
+    psi = np.asarray(psi0, dtype=np.complex128)
+    if isinstance(H, LinearOperator):
+        if bounds is None:
+            bounds = spectral_bounds(H)
+        mv = getattr(H, "fused", None) or H.matvec
+        step = lambda v, dt: chebyshev_step(mv, v, dt, bounds)
+    else:
+        A = -1j * (sp.csr_matrix(H) if sp.issparse(H) else np.asarray(H))
+        step = lambda v, dt: expm_multiply(A * dt, v)
+    tprev = 0.0
+    for t in times:
+        if t != tprev:
+            psi = step(psi, t - tprev)
+        yield psi
+        tprev = t
+
+
+def evolve(H, psi0, times, bounds=None):
     """States exp(-i H t) psi0 for each t in `times` (ascending, may start at 0).
-    H may be a sparse matrix or a scipy LinearOperator. Returns array (len(times), dim)."""
-    raise NotImplementedError
+    H may be a sparse matrix or a scipy LinearOperator. Returns array (len(times), dim).
+    Sparse/dense H: scipy expm_multiply. LinearOperator: Chebyshev propagation
+    (spectral bounds from Lanczos unless given)."""
+    return np.array(list(evolve_iter(H, psi0, times, bounds)), dtype=np.complex128)

@@ -1,21 +1,163 @@
 """Thermal (late-time) anchors (docs/METHODS.md, section 5)."""
 from __future__ import annotations
 
+import warnings
+
+import numpy as np
+import scipy.sparse as sp
+from scipy.optimize import brentq
+from scipy.sparse.linalg import LinearOperator, expm_multiply
+from scipy.special import ive
+
+_EIG_CACHE: dict = {}
+
+
+def _eig(H):
+    """(w, V) of H by full diagonalization, cached for the last H (n <= 14), so that
+    beta_for_energy_exact followed by thermal_exact diagonalizes only once."""
+    key = (id(H), H.shape)
+    if key not in _EIG_CACHE:
+        _EIG_CACHE.clear()
+        Hd = H.toarray() if sp.issparse(H) else np.asarray(H)
+        _EIG_CACHE[key] = (np.linalg.eigh(Hd), H)   # keep H alive so its id() stays unique
+    return _EIG_CACHE[key][0]
+
+
+def _weights(w, beta):
+    x = -beta * w
+    x = x - x.max()
+    p = np.exp(x)
+    return p / p.sum()
+
+
+def _energy(w, beta):
+    return float(_weights(w, beta) @ w)
+
 
 def thermal_exact(H, beta: float, ops: dict) -> dict:
     """Canonical averages Tr(e^{-beta H} O)/Z by full diagonalization (n <= 14).
     ops maps name -> sparse/dense matrix. Returns {'energy': ..., name: ...}."""
-    raise NotImplementedError
+    w, V = _eig(H)
+    p = _weights(w, beta)
+    out = {"energy": float(p @ w)}
+    for name, O in ops.items():
+        OV = O @ V
+        diag = np.einsum("ij,ij->j", V.conj(), np.asarray(OV)).real
+        out[name] = float(p @ diag)
+    return out
 
 
 def beta_for_energy_exact(H, energy: float) -> float:
     """beta (may be negative) with <H>_beta = energy, by full diagonalization."""
-    raise NotImplementedError
+    w = _eig(H)[0]
+    if not (w[0] < energy < w[-1]):
+        raise ValueError("energy outside the spectrum")
+    f = lambda b: _energy(w, b) - energy
+    lo, hi = -1.0, 1.0
+    while f(lo) < 0:
+        lo *= 2
+    while f(hi) > 0:
+        hi *= 2
+    return float(brentq(f, lo, hi, xtol=1e-12, rtol=1e-12))
+
+
+def _random_vectors(dim, n_samples, seed):
+    rng = np.random.default_rng(seed)
+    for _ in range(n_samples):
+        r = rng.normal(size=dim) + 1j * rng.normal(size=dim)
+        yield r / np.linalg.norm(r)
+
+
+def chebyshev_imag(apply_h, v, tau, bounds, tol=1e-15):
+    """exp(-tau H) v up to a v-independent positive factor exp(-tau c + |tau r|)
+    (c, r = centre, half-width of `bounds`). The factor cancels in typicality ratios.
+    `apply_h` may be a fused recurrence (hamiltonian.cheb_recur, attribute fused=True)."""
+    from .exact import cheb_series
+    lo, hi = bounds
+    c, r = 0.5 * (hi + lo), 0.5 * (hi - lo)
+    a = tau * r
+    kmax = int(abs(a) + 10 * abs(a) ** (1 / 3) + 40)
+    k = np.arange(kmax + 1)
+    coef = ive(k, a) * (-1.0) ** k * np.where(k == 0, 1.0, 2.0)
+    return cheb_series(apply_h, v, coef, c, r, tol)
 
 
 def thermal_typicality(apply_h, dim: int, beta: float, ops: dict, n_samples: int = 10,
-                       seed: int = 0) -> dict:
+                       seed: int = 0, bounds=None, recur=None) -> dict:
     """Quantum typicality: random vectors r, |r_b> = exp(-beta H/2)|r>,
     <O> ~ sum_r <r_b|O|r_b> / sum_r <r_b|r_b>.  Matrix-free: apply_h(psi) -> H psi;
-    ops maps name -> callable psi -> O psi. Returns {'energy': ..., name: ...}."""
-    raise NotImplementedError
+    ops maps name -> callable psi -> O psi. Returns {'energy': ..., name: ...,
+    'errors': {'energy': ..., name: ...}} where 'errors' are jackknife (leave-one-vector-out)
+    statistical errors of the ratio estimates (0 for a single vector).
+    exp(-beta H/2) by scipy expm_multiply on a LinearOperator (default), or, if spectral
+    `bounds` are given, by a Chebyshev expansion (about 4x fewer H applications at n=24)."""
+    A = LinearOperator((dim, dim), matvec=lambda v: -0.5 * beta * apply_h(v),
+                       rmatvec=lambda v: -0.5 * beta * apply_h(v), dtype=complex)
+    keys = ["energy", *ops]
+    nums = {k: [] for k in keys}
+    dens = []
+    for r in _random_vectors(dim, n_samples, seed):
+        if beta == 0:
+            rb = r
+        elif bounds is not None:
+            rb = chebyshev_imag(recur or apply_h, r, 0.5 * beta, bounds)
+        else:
+            rb = expm_multiply(A, r, traceA=0.0)
+        dens.append(np.vdot(rb, rb).real)
+        nums["energy"].append(np.vdot(rb, apply_h(rb)).real)
+        for name, op in ops.items():
+            nums[name].append(np.vdot(rb, op(rb)).real)
+    dens = np.array(dens)
+    out, errs = {}, {}
+    for k in keys:
+        x = np.array(nums[k])
+        out[k] = float(x.sum() / dens.sum())
+        m = len(x)
+        if m > 1:
+            loo = (x.sum() - x) / (dens.sum() - dens)          # leave-one-out estimates
+            errs[k] = float(np.sqrt((m - 1) / m * ((loo - loo.mean()) ** 2).sum()))
+        else:
+            errs[k] = 0.0
+    out["errors"] = errs
+    return out
+
+
+def beta_for_energy_typicality(apply_h, dim, energy, ops, beta0=0.0, step=0.1,
+                               n_samples=4, seed=0, max_evals=8, rtol=0.02, bounds=None,
+                               recur=None):
+    """Bracketed false-position (Illinois) search for beta with <H>_beta = energy, using
+    thermal_typicality with fixed random vectors (same seed for every evaluation).
+    Stops when |E - energy| <= rtol*max(1,|energy|)/4, or after max_evals evaluations.
+    Returns (beta, result_dict, history), the best evaluation found."""
+    hist = []
+
+    def ev(b):
+        r = thermal_typicality(apply_h, dim, b, ops, n_samples, seed, bounds, recur)
+        hist.append((b, r))
+        return r["energy"] - energy
+
+    tol = 0.25 * rtol * max(1.0, abs(energy))
+    a, fa = beta0, ev(beta0)
+    if abs(fa) <= tol:
+        return a, hist[-1][1], hist
+    # E(beta) decreases with beta: walk downhill/uphill to bracket the root
+    d = step if fa > 0 else -step
+    b, fb = a + d, ev(a + d)
+    while fa * fb > 0 and len(hist) < max_evals:
+        a, fa = b, fb
+        d *= 2
+        b, fb = a + d, ev(a + d)
+    while len(hist) < max_evals and abs(fb) > tol and fa * fb < 0:
+        c = b - fb * (b - a) / (fb - fa)
+        fc = ev(c)
+        if fc * fb < 0:
+            a, fa = b, fb
+        else:
+            fa *= 0.5            # Illinois modification
+        b, fb = c, fc
+    best = min(hist, key=lambda h: abs(h[1]["energy"] - energy))
+    if abs(best[1]["energy"] - energy) > rtol * max(1.0, abs(energy)):
+        warnings.warn(f"typicality beta search missed the {rtol:.0%} energy match: "
+                      f"best E={best[1]['energy']:.5g} vs target {energy:.5g} "
+                      f"after {len(hist)} evaluations", RuntimeWarning, stacklevel=2)
+    return best[0], best[1], hist

@@ -1,0 +1,17 @@
+{"items": [
+ {"key": "mps_large_chi", "title": "Large-bond-dimension MPS (GPU)", "N": [48, 56, 64, 96],
+  "purpose": "push the chi-convergence frontier of the cloud N=48 study (chi <= 256) to chi = 1024-4096, step by step, to locate where MPS fails for 4-10 first-order steps",
+  "needs": "GPU nodes (cupy/torch backend of su2torus.mps), configs/n96_stripe_g1.25_gpu.json, scripts/slurm/mps_gpu.sbatch"},
+ {"key": "peps_bp", "title": "PEPS with belief-propagation gauging", "N": [48, 64, 96],
+  "purpose": "2D tensor-network simulation of the same Trotter circuits; native to the honeycomb geometry, so no long-range MPS bonds across the torus",
+  "needs": "new PEPS driver (quimb/ yastn style), GPU memory for bond dimension D = 4-16"},
+ {"key": "pauli_propagation", "title": "Pauli propagation of local observables", "N": [48, 64, 96],
+  "purpose": "Heisenberg-picture truncated Pauli-path simulation of <Z_p> and link energies; complementary failure mode to MPS (operator growth instead of entanglement)",
+  "needs": "Pauli-propagation code with weight/coefficient truncation, many CPU cores"},
+ {"key": "qmc_thermal_anchor", "title": "Sign-free QMC thermal anchor", "N": [48, 56, 64],
+  "purpose": "the late-time thermal value at N = 48-64 (H is stoquastic: all off-diagonal elements <= 0, verified in M1), replacing exact diagonalization/typicality used up to N = 24",
+  "needs": "stochastic series expansion or path-integral QMC code for this Hamiltonian; CPU hours"},
+ {"key": "hardware_runs", "title": "Quantum hardware runs", "N": [48, 56, 64],
+  "purpose": "run the 4-10 step circuits (456-608 native-ZZ two-qubit gates per step) with echo and ZNE mitigation and compare with the classical frontier",
+  "needs": "trapped-ion (native ZZ) or superconducting (CZ) device time; p2 <= 1e-3 for useful raw fidelity at 4 steps"}
+]}

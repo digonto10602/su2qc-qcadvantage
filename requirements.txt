@@ -5,3 +5,5 @@ qiskit-aer
 matplotlib
 pytest
 quimb
+numba
+autoray
